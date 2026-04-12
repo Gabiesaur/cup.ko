@@ -1,1 +1,1 @@
-# cup.ko
+A website created for a senior high school project for ordering cake pops.
