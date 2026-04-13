@@ -1,9 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import food_images from '../assets/food_images.png';
 import landing_bg from '../assets/landing_bg.png';
 import logo from '../assets/logo.png';
 
 const LandingPage: React.FC = () => {
+    const navigate = useNavigate();
 
     return (
         <div className="relative w-full h-screen min-h-[700px] overflow-hidden bg-[#fdfaf0]">
@@ -21,29 +23,30 @@ const LandingPage: React.FC = () => {
                 <img
                     src={logo}
                     alt="Trese Chewy Cake Logo"
-                    className="w-60 md:w-65 lg:w-75 drop-shadow-md"
+                    className="w-60 lg:w-75 drop-shadow-md"
                 />
             </div>
 
             {/* Main Content Container (Now ONLY holding the text safely inside the margins) */}
-            <div className="relative z-10 w-full h-full max-w-[1440px] mx-auto flex flex-col justify-center px-6 sm:px-12 md:px-20 lg:px-28">
+            <div className="relative z-10 w-full h-full max-w-[1440px] mx-auto flex flex-col justify-center mr-10 md:mr-25 lg:mr-85">
 
                 {/* Left Column: Typography & CTA */}
-                <div className="w-full md:w-[50%] flex flex-col items-center md:items-start z-20 pt-32 md:pt-0 md:translate-x-10 lg:translate-x-24">
+                <div className="w-full md:w-[50%] flex flex-col items-center md:items-start z-20 pt-32 md:pt-0">
                     <h1
                         style={{ fontFamily: "Opun Mai Bold Italic" }}
                         /* Added text-center for mobile, md:text-left for desktop */
-                        className="text-center md:text-left text-5xl md:text-6xl lg:text-7xl font-bold text-[#CE828E] leading-[1.1] italic mb-8"
+                        className="w-1000 text-center md:text-left text-5xl md:text-6xl lg:text-7xl font-bold text-[#CE828E] leading-[1.1] italic mb-8"
                     >
                         Chewy with a <br />
                         Tropical Soul.
                     </h1>
 
                     {/* Added a wrapper with flex justify-center on mobile, md:justify-start on desktop */}
-                    <div className="flex w-full justify-center md:justify-start mt-12 md:mt-20">
+                    <div className="flex w-full justify-center md:justify-start mt-5">
                         <button
+                            onClick={() => navigate('/mode')}
                             style={{ fontFamily: "'Pangolin', cursive" }}
-                            className="bg-[#CE828E] text-white text-lg md:text-xl w-[200px] h-[50px] flex items-center justify-center rounded-xl hover:bg-[#b86d7a] transition-all duration-300 shadow-sm whitespace-nowrap"
+                            className="bg-[#CE828E] text-white text-2xl w-[200px] h-[50px] flex items-center justify-center rounded-xl hover:bg-[#b86d7a] transition-all duration-300 shadow-sm whitespace-nowrap"
                         >
                             Order Now
                         </button>
