@@ -38,25 +38,25 @@ const PaymentFormPage: React.FC = () => {
 
                     {/* Form Group 1: Name */}
                     <div className="w-full flex flex-col gap-2">
-                        <label className="text-[#873641] text-2xl font-bold" style={{ fontFamily: "'One Little Font', sans-serif" }}>
+                        <label className="text-[#873641] text-2xl font-bold" style={{ fontFamily: "'Patrick Hand', cursive" }}>
                             Name:
                         </label>
                         <input
                             type="text"
                             className="w-full bg-[#fce18d] text-[#873641] rounded-full px-6 py-4 text-xl outline-none placeholder-[#873641]/70"
-                            style={{ fontFamily: "'One Little Font', sans-serif" }}
+                            style={{ fontFamily: "'Patrick Hand', cursive" }}
                         />
                     </div>
 
                     {/* Form Group 2: Room & Building */}
                     <div className="w-full flex flex-col gap-2">
-                        <label className="text-[#873641] text-2xl font-bold" style={{ fontFamily: "'One Little Font', sans-serif" }}>
+                        <label className="text-[#873641] text-2xl font-bold" style={{ fontFamily: "'Patrick Hand', cursive" }}>
                             Room & building to deliver:
                         </label>
                         <input
                             type="text"
                             className="w-full bg-[#fce18d] text-[#873641] rounded-full px-6 py-4 text-xl outline-none placeholder-[#873641]/70"
-                            style={{ fontFamily: "'One Little Font', sans-serif" }}
+                            style={{ fontFamily: "'Patrick Hand', cursive" }}
                         />
                         <ul className="list-disc pl-6 text-[#873641] text-sm leading-tight pr-4 mt-1 opacity-80" style={{ fontFamily: "sans-serif" }}>
                             <li>Please know that delivery takes time as we are occupied in handling orders. Ensure that you are present in the room of receiving delivery.</li>
@@ -65,13 +65,13 @@ const PaymentFormPage: React.FC = () => {
 
                     {/* Form Group 3: Contact */}
                     <div className="w-full flex flex-col gap-2">
-                        <label className="text-[#873641] text-2xl font-bold" style={{ fontFamily: "'One Little Font', sans-serif" }}>
+                        <label className="text-[#873641] text-2xl font-bold" style={{ fontFamily: "'Patrick Hand', cursive" }}>
                             ig/fb contact:
                         </label>
                         <input
                             type="text"
                             className="w-full bg-[#fce18d] text-[#873641] rounded-full px-6 py-4 text-xl outline-none placeholder-[#873641]/70"
-                            style={{ fontFamily: "'One Little Font', sans-serif" }}
+                            style={{ fontFamily: "'Patrick Hand', cursive" }}
                         />
                         <ul className="list-disc pl-6 text-[#873641] text-sm leading-tight pr-4 mt-1 opacity-80" style={{ fontFamily: "sans-serif" }}>
                             <li>This will serve as the mode of communication for contacting purposes only.</li>
