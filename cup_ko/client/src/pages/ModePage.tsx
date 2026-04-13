@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import mob_bg from '../assets/main_bg.png';
+import main_bg from '../assets/main_bg.png';
 import cart from '../assets/cart.png';
 import left from '../assets/mob_left.png';
 import right from '../assets/mob_right.png';
@@ -12,7 +12,7 @@ const ModePage: React.FC = () => {
         <div
             className="flex justify-center items-center overflow-hidden gap-8"
             style={{
-                backgroundImage: `url(${mob_bg})`,
+                backgroundImage: `url(${main_bg})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
@@ -27,7 +27,7 @@ const ModePage: React.FC = () => {
                         <img src={cart} alt="cart" className='h-10 w-10' />
                         <p className='text-[#fbc208] text-5xl font-bold' style={{ fontFamily: "Opun Mai Bold Italic" }}>mode of buying</p>
                     </button>
-                    <div className='flex flex-col justify-around h-[100%] pt-8'>
+                    <div className='flex flex-col justify-around h-full pt-8'>
                         <div className='w-125'>
                             <div className='h-20 bg-[#fcd990] rounded-4xl flex justify-center items-center'>
                                 <p className='text-[#e1a0aa] text-5xl font-bold' style={{ fontFamily: "Opun Mai Bold Italic" }}>Physical Store</p>
