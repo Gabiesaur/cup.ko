@@ -6,7 +6,7 @@ const LandingPage = () => {
             className='min-h-screen w-full bg-cover bg-center bg-no-repeat'
             style={{ backgroundImage: `url(${landing_bg})`}}
         >
-            <h1 style={{ fontFamily: "'Opun Mai Bold Italic'" }}>
+            <h1 style={{ fontFamily: "Opun Mai Bold Italic" }}>
                 Chewy with a Tropical Soul.
             </h1>
         </main>
