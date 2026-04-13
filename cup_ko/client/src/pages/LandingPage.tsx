@@ -44,7 +44,7 @@ const LandingPage: React.FC = () => {
                     {/* Added a wrapper with flex justify-center on mobile, md:justify-start on desktop */}
                     <div className="flex w-full justify-center md:justify-start mt-5">
                         <button
-                            onClick={() => navigate('/mode')}
+                            onClick={() => navigate('/order')}
                             style={{ fontFamily: "'Patrick Hand', cursive" }}
                             className="bg-[#CE828E] text-white text-2xl w-[200px] h-[50px] flex items-center justify-center rounded-xl hover:bg-[#b86d7a] transition-all duration-300 shadow-sm whitespace-nowrap"
                         >

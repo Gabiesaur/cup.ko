@@ -90,7 +90,7 @@ function CartPage({
                 </p>
                 <Link
                   onClick={onClearCart}
-                  to="/payment"
+                  to="/mode"
                   className="font-pangolin text-sm rounded-full bg-[#ffe7b5] px-5 py-2 text-[#9a3140]"
                 >
                   PLACE ORDER
