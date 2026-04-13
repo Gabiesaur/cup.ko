@@ -1,16 +1,20 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Mali:ital,wght@1,700&family=Pangolin&display=swap');
 
 @font-face {
-  font-family: 'Opun Mai Bold Italic';
-  src: url('./assets/fonts/Opun Mai Bold Italic.ttf') format('truetype');
+  font-family: "Opun Mai Bold Italic";
+  src: url("./assets/fonts/Opun Mai Bold Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Pangolin Regular";
+  src: url("./assets/fonts/Pangolin.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
 }
 
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
 }
 
@@ -19,4 +23,17 @@ body,
 #root {
   height: 100%;
   width: 100%;
+}
+
+.font-opun {
+  font-family: "Opun Mai Bold Italic", cursive;
+}
+
+.font-pangolin {
+  font-family: "Pangolin Regular", cursive;
+}
+
+.text-stroke-cake {
+  -webkit-text-stroke: 0.4rem #8a2d3a;
+  paint-order: stroke fill;
 }
