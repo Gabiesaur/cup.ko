@@ -1,6 +1,6 @@
 import React from 'react';
 import type { ReactNode } from 'react';
-import mob_bg from '../assets/mob_bg.png';
+import mob_bg from '../assets/main_bg.png';
 import left from '../assets/mob_left.png';
 import right from '../assets/mob_right.png';
 
