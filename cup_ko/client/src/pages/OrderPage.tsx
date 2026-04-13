@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Item from "../components/order/Item";
 import type { Product } from "../types/shop";
@@ -9,8 +10,43 @@ type OrderPageProps = {
 };
 
 function OrderPage({ items, onAddToCart, cartCount }: OrderPageProps) {
+  const [toastMessage, setToastMessage] = useState("");
+  const [isToastVisible, setIsToastVisible] = useState(false);
+  const toastTimerRef = useRef<number | undefined>(undefined);
+
+  useEffect(() => {
+    return () => {
+      if (toastTimerRef.current) {
+        window.clearTimeout(toastTimerRef.current);
+      }
+    };
+  }, []);
+
+  const handleAddToCart = (item: Product) => {
+    onAddToCart(item);
+    setToastMessage(`${item.name} added to cart`);
+    setIsToastVisible(true);
+
+    if (toastTimerRef.current) {
+      window.clearTimeout(toastTimerRef.current);
+    }
+
+    toastTimerRef.current = window.setTimeout(() => {
+      setIsToastVisible(false);
+    }, 1800);
+  };
+
   return (
     <div className="flex flex-col items-center pb-16">
+      <div
+        role="status"
+        aria-live="polite"
+        className={`pointer-events-none fixed right-6 top-6 z-50 max-w-xs rounded-2xl bg-[#9a3140] px-4 py-3 text-white shadow-lg transition-all duration-200 ${isToastVisible ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-0"}`}
+      >
+        <p className="font-pangolin text-base leading-tight">
+          {toastMessage || "Added to cart"}
+        </p>
+      </div>
       <div className="w-full max-w-7xl px-8 pt-16 flex items-center justify-center">
         <h1 className="font-opun text-[#e1a0aa] text-stroke-cake text-7xl">
           Chewy Cake Bites
@@ -23,7 +59,7 @@ function OrderPage({ items, onAddToCart, cartCount }: OrderPageProps) {
               key={item.id}
               name={item.name}
               price={item.price}
-              onAddToCart={() => onAddToCart(item)}
+              onAddToCart={() => handleAddToCart(item)}
             />
           ))}
         </div>
