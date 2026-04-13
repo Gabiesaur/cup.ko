@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage.tsx";
 import OrderPage from "./pages/OrderPage.tsx";
 import CartPage from "./pages/CartPage.tsx";
+import ModePage from "./pages/ModePage.tsx";
 import type { CartItem, Product } from "./types/shop";
 
 const products: Product[] = [
@@ -76,6 +77,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/mode" element={<ModePage />} />
         <Route
           path="/order"
           element={
