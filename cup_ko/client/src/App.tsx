@@ -82,7 +82,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/mode" element={<ModePage />} />
         <Route path="/checkout" element={<CheckOutPage />} />
-        <Route path="/payment" element={<PaymentFormPage />} />
+        <Route path="/paymentform" element={<PaymentFormPage />} />
         <Route path="/sales-tracker" element={<SalesTrackerPage />} />
         <Route
           path="/order"

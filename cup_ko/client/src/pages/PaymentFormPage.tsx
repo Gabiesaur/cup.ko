@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import main_bg from '../assets/main_bg.png';
 import cart from '../assets/cart.png';
 import left from '../assets/mob_left.png';
@@ -9,9 +9,10 @@ type BuyingMode = 'physical store' | 'delivery' | 'reservation';
 
 const PaymentFormPage: React.FC = () => {
     const navigate = useNavigate();
-    
+    const location = useLocation();
+
     // States for handling the dropdown and selected form fields
-    const [mode, setMode] = useState<BuyingMode>('delivery');
+    const [mode, setMode] = useState<BuyingMode>((location.state?.mode as BuyingMode) || 'delivery');
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [paymentMode, setPaymentMode] = useState<'gcash' | 'cash' | ''>('');
 
