@@ -4,6 +4,8 @@ import LandingPage from "./pages/LandingPage.tsx";
 import OrderPage from "./pages/OrderPage.tsx";
 import CartPage from "./pages/CartPage.tsx";
 import ModePage from "./pages/ModePage.tsx";
+import CheckOutPage from "./pages/CheckOutPage.tsx";
+import SalesTrackerPage from "./pages/SalesTrackerPage.tsx";
 import type { CartItem, Product } from "./types/shop";
 
 const products: Product[] = [
@@ -78,6 +80,8 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/mode" element={<ModePage />} />
+        <Route path="/checkout" element={<CheckOutPage />} />
+        <Route path="/sales-tracker" element={<SalesTrackerPage />} />
         <Route
           path="/order"
           element={
