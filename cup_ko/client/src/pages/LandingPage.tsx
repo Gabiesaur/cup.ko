@@ -1,9 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import food_images from '../assets/food_images.png';
 import landing_bg from '../assets/landing_bg.png';
 import logo from '../assets/logo.png';
 
 const LandingPage: React.FC = () => {
+    const navigate = useNavigate();
+
     return (
         <div className="relative w-full h-screen min-h-[700px] overflow-hidden bg-[#fdfaf0]">
             {/* Background Vector */}
@@ -41,6 +44,7 @@ const LandingPage: React.FC = () => {
 
                     <div>
                         <button
+                            onClick={() => navigate('/mode')}
                             style={{ fontFamily: "'One Little Font', sans-serif" }}
                             className="bg-[#CE828E] text-white text-lg md:text-xl lg:text-2xl px-10 py-3 rounded-[20px] hover:bg-[#b86d7a] transition-colors duration-300 shadow-md"
                         >
