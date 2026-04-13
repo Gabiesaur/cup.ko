@@ -22,7 +22,7 @@ const CheckOutPage: React.FC = () => {
                 <div className='relative h-200 w-450 bg-[#cc8386] rounded-4xl flex flex-col justify-around items-center gap-4'>
                     <div className='absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 h-20 w-100 bg-[#cc8386] rounded-4xl flex flex-row justify-center items-center'>
                         <img src={cart} alt="cart" className='h-10 w-10' />
-                        <p className='text-[#e1a0aa] text-6xl font-bold [text-shadow:_2px_3px_2px_#a8606c]' style={{ fontFamily: "Opun Mai Bold Italic" }}>check out</p>
+                        <p className='text-[#e1a0aa] text-6xl font-bold [text-shadow:2px_3px_2px_#a8606c]' style={{ fontFamily: "Opun Mai Bold Italic" }}>check out</p>
                     </div>
                 </div>
             </div>
