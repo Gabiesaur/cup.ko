@@ -9,7 +9,7 @@ type BuyingMode = 'physical store' | 'delivery' | 'reservation';
 
 const PaymentFormPage: React.FC = () => {
     const navigate = useNavigate();
-    
+
     // States for handling the dropdown and selected form fields
     const [mode, setMode] = useState<BuyingMode>('delivery');
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -41,7 +41,7 @@ const PaymentFormPage: React.FC = () => {
 
                     {/* Header Badge / Dropdown Container */}
                     <div className='absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] z-50 flex flex-col items-center'>
-                        
+
                         {/* Main Button */}
                         <button
                             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -77,42 +77,40 @@ const PaymentFormPage: React.FC = () => {
 
                     {/* Form Group 1: Name (Common to all modes) */}
                     <div className="w-full flex flex-col gap-2 relative z-0">
-                        <label className="text-[#873641] text-2xl font-bold" style={{ fontFamily: "'One Little Font', sans-serif" }}>
+                        <label className="text-[#873641] text-2xl font-bold" style={{ fontFamily: "'Patrick Hand', cursive" }}>
                             Name:
                         </label>
                         <input
                             type="text"
                             className="w-full bg-[#fce18d] text-[#873641] rounded-full px-6 py-4 text-xl outline-none placeholder-[#873641]/70"
-                            style={{ fontFamily: "'One Little Font', sans-serif" }}
+                            style={{ fontFamily: "'Patrick Hand', cursive" }}
                         />
                     </div>
 
                     {/* Physical Store Specific */}
                     {mode === 'physical store' && (
                         <div className="w-full flex flex-col gap-4 relative z-0">
-                            <label className="text-[#873641] text-2xl font-bold" style={{ fontFamily: "'One Little Font', sans-serif" }}>
+                            <label className="text-[#873641] text-2xl font-bold" style={{ fontFamily: "'Patrick Hand', cursive" }}>
                                 Mode of Payment:
                             </label>
                             <div className="flex gap-4">
                                 <button
                                     onClick={() => setPaymentMode('gcash')}
-                                    className={`flex-1 py-4 px-6 rounded-full text-xl font-bold transition-colors ${
-                                        paymentMode === 'gcash'
-                                            ? 'bg-[#f8cc1b] text-[#873641]'
-                                            : 'bg-[#fce18d] text-[#873641] hover:bg-[#f8cc1b]'
-                                    }`}
-                                    style={{ fontFamily: "'One Little Font', sans-serif" }}
+                                    className={`flex-1 py-4 px-6 rounded-full text-xl font-bold transition-colors ${paymentMode === 'gcash'
+                                        ? 'bg-[#f8cc1b] text-[#873641]'
+                                        : 'bg-[#fce18d] text-[#873641] hover:bg-[#f8cc1b]'
+                                        }`}
+                                    style={{ fontFamily: "'Patrick Hand', cursive" }}
                                 >
                                     GCash
                                 </button>
                                 <button
                                     onClick={() => setPaymentMode('cash')}
-                                    className={`flex-1 py-4 px-6 rounded-full text-xl font-bold transition-colors ${
-                                        paymentMode === 'cash'
-                                            ? 'bg-[#f8cc1b] text-[#873641]'
-                                            : 'bg-[#fce18d] text-[#873641] hover:bg-[#f8cc1b]'
-                                    }`}
-                                    style={{ fontFamily: "'One Little Font', sans-serif" }}
+                                    className={`flex-1 py-4 px-6 rounded-full text-xl font-bold transition-colors ${paymentMode === 'cash'
+                                        ? 'bg-[#f8cc1b] text-[#873641]'
+                                        : 'bg-[#fce18d] text-[#873641] hover:bg-[#f8cc1b]'
+                                        }`}
+                                    style={{ fontFamily: "'Patrick Hand', cursive" }}
                                 >
                                     Cash
                                 </button>
@@ -123,13 +121,13 @@ const PaymentFormPage: React.FC = () => {
                     {/* Delivery Specific */}
                     {mode === 'delivery' && (
                         <div className="w-full flex flex-col gap-2 relative z-0">
-                            <label className="text-[#873641] text-2xl font-bold" style={{ fontFamily: "'One Little Font', sans-serif" }}>
+                            <label className="text-[#873641] text-2xl font-bold" style={{ fontFamily: "'Patrick Hand', cursive" }}>
                                 Room & building to deliver:
                             </label>
                             <input
                                 type="text"
                                 className="w-full bg-[#fce18d] text-[#873641] rounded-full px-6 py-4 text-xl outline-none placeholder-[#873641]/70"
-                                style={{ fontFamily: "'One Little Font', sans-serif" }}
+                                style={{ fontFamily: "'Patrick Hand', cursive" }}
                             />
                             <ul className="list-disc pl-6 text-[#873641] text-sm leading-tight pr-4 mt-1 opacity-80" style={{ fontFamily: "sans-serif" }}>
                                 <li>Please know that delivery takes time as we are occupied in handling orders. Ensure that you are present in the room of receiving delivery.</li>
@@ -140,13 +138,13 @@ const PaymentFormPage: React.FC = () => {
                     {/* Reservation Specific */}
                     {mode === 'reservation' && (
                         <div className="w-full flex flex-col gap-2 relative z-0">
-                            <label className="text-[#873641] text-2xl font-bold" style={{ fontFamily: "'One Little Font', sans-serif" }}>
+                            <label className="text-[#873641] text-2xl font-bold" style={{ fontFamily: "'Patrick Hand', cursive" }}>
                                 Time of pickup:
                             </label>
                             <input
                                 type="time"
                                 className="w-full bg-[#fce18d] text-[#873641] rounded-full px-6 py-4 text-xl outline-none placeholder-[#873641]/70"
-                                style={{ fontFamily: "'One Little Font', sans-serif" }}
+                                style={{ fontFamily: "'Patrick Hand', cursive" }}
                             />
                         </div>
                     )}
@@ -154,13 +152,13 @@ const PaymentFormPage: React.FC = () => {
                     {/* Shared: Contact (For Delivery & Reservation) */}
                     {(mode === 'delivery' || mode === 'reservation') && (
                         <div className="w-full flex flex-col gap-2 relative z-0">
-                            <label className="text-[#873641] text-2xl font-bold" style={{ fontFamily: "'One Little Font', sans-serif" }}>
+                            <label className="text-[#873641] text-2xl font-bold" style={{ fontFamily: "'Patrick Hand', cursive" }}>
                                 ig/fb contact:
                             </label>
                             <input
                                 type="text"
                                 className="w-full bg-[#fce18d] text-[#873641] rounded-full px-6 py-4 text-xl outline-none placeholder-[#873641]/70"
-                                style={{ fontFamily: "'One Little Font', sans-serif" }}
+                                style={{ fontFamily: "'Patrick Hand', cursive" }}
                             />
                             <ul className="list-disc pl-6 text-[#873641] text-sm leading-tight pr-4 mt-1 opacity-80" style={{ fontFamily: "sans-serif" }}>
                                 <li>This will serve as the mode of communication for contacting purposes only.</li>
