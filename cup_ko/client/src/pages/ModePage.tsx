@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import mob_bg from '../assets/mob_bg.png';
-import cart from '../assets/icon.png';
+import mob_bg from '../assets/main_bg.png';
+import cart from '../assets/cart.png';
 import left from '../assets/mob_left.png';
 import right from '../assets/mob_right.png';
 
@@ -20,7 +20,7 @@ const ModePage: React.FC = () => {
                 width: '100%',
             }}
         >
-            <img src={left} className='w-[20%]'/>
+            <img src={left} className='w-[20%]' />
             <div className='flex flex-col items-center'>
                 <div className='relative h-175 w-175 bg-[#cc8386] rounded-4xl flex flex-col justify-around items-center gap-4'>
                     <button className='absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 h-20 w-125 bg-[#cc8386] rounded-4xl flex flex-row justify-center items-center'>
@@ -38,14 +38,14 @@ const ModePage: React.FC = () => {
                                 </li>
                             </ul>
                         </div>
-                        
+
                         <div className='w-125'>
                             <div className='h-20 bg-[#fcd990] rounded-4xl flex justify-center items-center'>
                                 <p className='text-[#e1a0aa] text-5xl font-bold' style={{ fontFamily: "Opun Mai Bold Italic" }}>Delivery</p>
                             </div>
                             <ul className='pl-8'>
                                 <li className='text-[#FFFFFF] list-disc text-xl'>
-                                    Mode of buying through delivery means your product will be delivered to you only available for classroom delivery in any school building. 
+                                    Mode of buying through delivery means your product will be delivered to you only available for classroom delivery in any school building.
                                 </li>
                             </ul>
                         </div>
@@ -62,7 +62,7 @@ const ModePage: React.FC = () => {
                     </div>
                 </div>
             </div>
-            <img src={right} className='w-[20%]'/>
+            <img src={right} className='w-[20%]' />
         </div>
     );
 };
