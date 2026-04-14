@@ -59,6 +59,7 @@ function OrderPage({ items, onAddToCart, cartCount }: OrderPageProps) {
               key={item.id}
               name={item.name}
               price={item.price}
+              image={item.image}
               onAddToCart={() => handleAddToCart(item)}
             />
           ))}
