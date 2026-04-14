@@ -41,7 +41,7 @@ const PaymentFormPage: React.FC = () => {
                 <div className='relative h-[650px] w-[650px] bg-[#cc8386] rounded-[40px] flex flex-col justify-start items-start pt-15 px-12 pb-12 gap-6 shadow-lg'>
 
                     {/* Header Badge / Dropdown Container */}
-                    <div className='absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] z-50 flex flex-col items-center'>
+                    <div className='absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] z-50 flex flex-col items-center'>
 
                         {/* Main Button */}
                         <button
