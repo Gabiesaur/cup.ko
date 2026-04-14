@@ -55,7 +55,7 @@ const PaymentFormPage: React.FC = () => {
 
     return (
         <div
-            className="flex justify-center items-center overflow-hidden gap-8"
+            className="flex justify-center items-center overflow-hidden gap-8 py-16 px-4"
             style={{
                 backgroundImage: `url(${main_bg})`,
                 backgroundSize: "cover",
@@ -134,7 +134,7 @@ const PaymentFormPage: React.FC = () => {
                         </label>
                         <input
                             type="text"
-                            className="w-full bg-[#fce18d] text-[#873641] rounded-full px-6 py-4 text-xl outline-none placeholder-[#873641]/70"
+                            className="w-full bg-[#fce18d] text-[#873641] rounded-full px-5 py-3 md:px-6 md:py-4 text-base md:text-xl outline-none placeholder-[#873641]/70"
                             style={{ fontFamily: "'Patrick Hand', cursive" }}
                             onChange={(e) => setName(e.target.value)}
                         />
@@ -146,7 +146,7 @@ const PaymentFormPage: React.FC = () => {
                         >
                             Mode of Payment:
                         </label>
-                        <div className="flex gap-4">
+                        <div className="flex gap-3">
                             <button
                                 onClick={() => setPaymentMode("gcash")}
                                 className={`flex-1 py-4 px-6 rounded-full text-xl font-bold transition-colors ${
