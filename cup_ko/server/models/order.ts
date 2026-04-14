@@ -1,17 +1,18 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema({
     customerName: {type: String, required: true},
     items: [{type: String, required: true}],
-    prices: [{type: Number, required: true}],
+    totalPrice: {type: Number, required: true},
     modePayment: {type: String, enum: ["cash", "gcash"], required: true},
     modeBuying: {type: String, enum: ["reservation", "physical", "delivery"], required: true},
     status: {type: String, enum: ["pending", "done"], required: true, default: "pending"},
     date: {type: Date, required: true},
-    customerUsername: {type: String, required: true}, 
+    pickupTime: {type: Date},
+    customerUsername: {type: String}, 
     location: {type: String}, 
-    pickuptime: {type: Date}, 
 });
 
-const Order = mongoose.model('Order', OrderSchema);
-module.exports = Order;
+const Order = mongoose.model('Order', orderSchema);
+export default Order;
+// module.exports = Order;

@@ -1,74 +1,64 @@
-import express, { Application, Request, Response } from "express";
+import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
-import Order from "../models/order";
-
+import Order from "../models/order.js";
 dotenv.config();
-
-const app: Application = express();
+const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI || "";
-
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 // Health check route
-app.get("/api/health", (req: Request, res: Response) => {
+app.get("/api/health", (req, res) => {
     res.json({ message: "Server is running" });
 });
-
 // MongoDB Connection
-const connectDB = async (): Promise<void> => {
+const connectDB = async () => {
     try {
         await mongoose.connect(MONGO_URI);
         console.log("✅ MongoDB connected");
-    } catch (error) {
+    }
+    catch (error) {
         console.error("❌ MongoDB connection failed:", error);
         process.exit(1);
     }
 };
-
 app.post("/saveOrder", async (req, res) => {
     try {
-        const {modePayment, customerName, items, totalPrice, modeBuying, customerUsername, roomBuilding} = req.body;
-
+        const { modePayment, customerName, items, totalPrice, modeBuying, customerUsername, roomBuilding } = req.body;
         const newOrder = new Order({
-          customerName,
-          items,
-          totalPrice,
-          modePayment,
-          modeBuying,
-        })
-
-        if(modeBuying === "reservation"){
-          newOrder.pickupTime = new Date(),
-          newOrder.customerUsername = customerUsername
-        }else if(modeBuying === "delivery"){
-          newOrder.location = roomBuilding,
-          newOrder.customerUsername = customerUsername
+            customerName,
+            items,
+            totalPrice,
+            modePayment,
+            modeBuying,
+        });
+        if (modeBuying === "reservation") {
+            newOrder.pickupTime = new Date(),
+                newOrder.customerUsername = customerUsername;
         }
-
+        else if (modeBuying === "delivery") {
+            newOrder.location = roomBuilding,
+                newOrder.customerUsername = customerUsername;
+        }
         await newOrder.save();
-
-        res.status(201).json({message: "order placed"});
-
-    } catch (err) {
+        res.status(201).json({ message: "order placed" });
+    }
+    catch (err) {
         console.error(err);
         res.status(400).json({
             error: "order fail",
         });
     }
 });
-
 // Start Server
-const start = async (): Promise<void> => {
+const start = async () => {
     await connectDB();
     app.listen(PORT, () => {
         console.log(`🚀 Server running on http://localhost:${PORT}`);
     });
 };
-
 start();
