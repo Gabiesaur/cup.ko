@@ -38,7 +38,7 @@ const PaymentFormPage: React.FC = () => {
 
             <div className='flex flex-col items-center z-10'>
                 {/* Main Pink Container */}
-                <div className='relative h-[650px] w-[650px] bg-[#cc8386] rounded-[40px] flex flex-col justify-start items-start pt-32 px-12 pb-12 gap-6 shadow-lg'>
+                <div className='relative h-[650px] w-[650px] bg-[#cc8386] rounded-[40px] flex flex-col justify-start items-start pt-15 px-12 pb-12 gap-6 shadow-lg'>
 
                     {/* Header Badge / Dropdown Container */}
                     <div className='absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] z-50 flex flex-col items-center'>
@@ -87,37 +87,33 @@ const PaymentFormPage: React.FC = () => {
                             style={{ fontFamily: "'Patrick Hand', cursive" }}
                         />
                     </div>
-
-                    {/* Physical Store Specific */}
-                    {mode === 'physical store' && (
-                        <div className="w-full flex flex-col gap-4 relative z-0">
-                            <label className="text-[#873641] text-2xl font-bold" style={{ fontFamily: "'Patrick Hand', cursive" }}>
-                                Mode of Payment:
-                            </label>
-                            <div className="flex gap-4">
-                                <button
-                                    onClick={() => setPaymentMode('gcash')}
-                                    className={`flex-1 py-4 px-6 rounded-full text-xl font-bold transition-colors ${paymentMode === 'gcash'
-                                        ? 'bg-[#f8cc1b] text-[#873641]'
-                                        : 'bg-[#fce18d] text-[#873641] hover:bg-[#f8cc1b]'
-                                        }`}
-                                    style={{ fontFamily: "'Patrick Hand', cursive" }}
-                                >
-                                    GCash
-                                </button>
-                                <button
-                                    onClick={() => setPaymentMode('cash')}
-                                    className={`flex-1 py-4 px-6 rounded-full text-xl font-bold transition-colors ${paymentMode === 'cash'
-                                        ? 'bg-[#f8cc1b] text-[#873641]'
-                                        : 'bg-[#fce18d] text-[#873641] hover:bg-[#f8cc1b]'
-                                        }`}
-                                    style={{ fontFamily: "'Patrick Hand', cursive" }}
-                                >
-                                    Cash
-                                </button>
-                            </div>
+                    <div className="w-full flex flex-col gap-4 relative z-0">
+                        <label className="text-[#873641] text-2xl font-bold" style={{ fontFamily: "'Patrick Hand', cursive" }}>
+                            Mode of Payment:
+                        </label>
+                        <div className="flex gap-4">
+                            <button
+                                onClick={() => setPaymentMode('gcash')}
+                                className={`flex-1 py-4 px-6 rounded-full text-xl font-bold transition-colors ${paymentMode === 'gcash'
+                                    ? 'bg-[#f8cc1b] text-[#873641]'
+                                    : 'bg-[#fce18d] text-[#873641] hover:bg-[#f8cc1b]'
+                                    }`}
+                                style={{ fontFamily: "'Patrick Hand', cursive" }}
+                            >
+                                GCash
+                            </button>
+                            <button
+                                onClick={() => setPaymentMode('cash')}
+                                className={`flex-1 py-4 px-6 rounded-full text-xl font-bold transition-colors ${paymentMode === 'cash'
+                                    ? 'bg-[#f8cc1b] text-[#873641]'
+                                    : 'bg-[#fce18d] text-[#873641] hover:bg-[#f8cc1b]'
+                                    }`}
+                                style={{ fontFamily: "'Patrick Hand', cursive" }}
+                            >
+                                Cash
+                            </button>
                         </div>
-                    )}
+                    </div>
 
                     {/* Delivery Specific */}
                     {mode === 'delivery' && (
