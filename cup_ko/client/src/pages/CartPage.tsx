@@ -45,9 +45,9 @@ function CartPage({
           ) : (
             <>
               <div className="space-y-4">
-                {cartItems.map((item) => (
+                {cartItems.map((item, index) => (
                   <div
-                    key={item.id}
+                    key={`${item.id}-${index}`}
                     className="flex items-center justify-between gap-4 rounded-3xl bg-rose-100 p-5"
                   >
                     <div>
