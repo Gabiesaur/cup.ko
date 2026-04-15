@@ -54,7 +54,7 @@ app.post("/saveOrder", async (req: Request, res: Response) => {
 
         await newOrder.save();
 
-        res.status(201).json({message: "order placed"});
+        res.status(201).json({ message: "order placed", orderId: newOrder._id });
 
     } catch (err: unknown) {
         console.error("Save order error:", err);
@@ -63,6 +63,26 @@ app.post("/saveOrder", async (req: Request, res: Response) => {
             error: "order fail",
             details: errorMessage,
         });
+    }
+});
+
+app.patch("/updateOrder/:id", async (req: Request, res: Response) => {
+    try {
+        const { gcashRefNo } = req.body;
+        const updated = await Order.findByIdAndUpdate(
+            req.params.id,
+            { gcashRefNo },
+            { new: true }
+        );
+        if (!updated) {
+            res.status(404).json({ error: "Order not found" });
+            return;
+        }
+        res.status(200).json({ message: "Order updated", order: updated });
+    } catch (err: unknown) {
+        console.error("Update order error:", err);
+        const errorMessage = err instanceof Error ? err.message : "Unknown error";
+        res.status(400).json({ error: "update fail", details: errorMessage });
     }
 });
 

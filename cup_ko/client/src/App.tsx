@@ -6,7 +6,8 @@ import CartPage from "./pages/CartPage.tsx";
 import ModePage from "./pages/ModePage.tsx";
 import CheckOutPage from "./pages/CheckOutPage.tsx";
 import SalesTrackerPage from "./pages/SalesTrackerPage.tsx";
-import PaymentFormPage from "./pages/PaymentFormPage.tsx";
+import PurchaseFormPage from "./pages/PurchaseFormPage.tsx";
+import PaymentPage from "./pages/PaymentPage.tsx";
 import Mango_Coconut from "./assets/Mango_Coconut.png";
 import Mango_Graham from "./assets/Mango_Graham.png";
 import Mango_Rice from "./assets/Mango_Rice.png";
@@ -94,7 +95,8 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/mode" element={<ModePage />} />
         <Route path="/checkout" element={<CheckOutPage />} />
-        <Route path="/paymentform" element={<PaymentFormPage />} />
+        <Route path="/purchaseform" element={<PurchaseFormPage />} />
+        <Route path="/payment" element={<PaymentPage />} />
         <Route path="/sales-tracker" element={<SalesTrackerPage />} />
         <Route
           path="/order"

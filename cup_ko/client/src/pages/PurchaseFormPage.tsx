@@ -7,7 +7,7 @@ import right from "../assets/mob_right.png";
 
 type BuyingMode = "physical" | "delivery" | "reservation";
 
-const PaymentFormPage: React.FC = () => {
+const PurchaseFormPage: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { items, total } = location.state || { items: [], total: 0 };
@@ -21,6 +21,7 @@ const PaymentFormPage: React.FC = () => {
     const [pickupTime, setPickupTime] = useState("");
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [paymentMode, setPaymentMode] = useState<"gcash" | "cash" | "">("");
+    const [payingNow, setPayingNow] = useState(false);
 
     useEffect(() => {
         console.log(roomBuilding);
@@ -71,8 +72,14 @@ const PaymentFormPage: React.FC = () => {
             });
 
             if (response.ok) {
+                const data = await response.json();
                 console.log("order saved");
-                navigate("/");
+
+                if (payingNow) {
+                    navigate("/payment", { state: { orderId: data.orderId } });
+                } else {
+                    navigate("/");
+                }
             } else {
                 const errorData = await response.json();
                 console.error("Server error:", errorData);
@@ -104,7 +111,7 @@ const PaymentFormPage: React.FC = () => {
 
             <div className="flex flex-col items-center z-10">
                 {/* Main Pink Container */}
-                <div className="relative h-[650px] w-[650px] bg-[#cc8386] rounded-[40px] flex flex-col justify-start items-start pt-15 px-12 pb-12 gap-6 shadow-lg">
+                <div className="relative h-[650px] w-[650px] bg-[#cc8386] rounded-[40px] flex flex-col justify-start items-start pt-10 px-12 pb-12 gap-6 shadow-lg">
                     {/* Header Badge / Dropdown Container */}
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] z-50 flex flex-col items-center">
                         {/* Main Button */}
@@ -180,11 +187,10 @@ const PaymentFormPage: React.FC = () => {
                         <div className="flex gap-3">
                             <button
                                 onClick={() => setPaymentMode("gcash")}
-                                className={`flex-1 py-4 px-6 rounded-full text-xl font-bold transition-colors ${
-                                    paymentMode === "gcash"
-                                        ? "bg-[#f8cc1b] text-[#873641]"
-                                        : "bg-[#fce18d] text-[#873641] hover:bg-[#f8cc1b]"
-                                }`}
+                                className={`flex-1 py-4 px-6 rounded-full text-xl font-bold transition-colors ${paymentMode === "gcash"
+                                    ? "bg-[#f8cc1b] text-[#873641]"
+                                    : "bg-[#fce18d] text-[#873641] hover:bg-[#f8cc1b]"
+                                    }`}
                                 style={{
                                     fontFamily: "'Patrick Hand', cursive",
                                 }}
@@ -193,11 +199,10 @@ const PaymentFormPage: React.FC = () => {
                             </button>
                             <button
                                 onClick={() => setPaymentMode("cash")}
-                                className={`flex-1 py-4 px-6 rounded-full text-xl font-bold transition-colors ${
-                                    paymentMode === "cash"
-                                        ? "bg-[#f8cc1b] text-[#873641]"
-                                        : "bg-[#fce18d] text-[#873641] hover:bg-[#f8cc1b]"
-                                }`}
+                                className={`flex-1 py-4 px-6 rounded-full text-xl font-bold transition-colors ${paymentMode === "cash"
+                                    ? "bg-[#f8cc1b] text-[#873641]"
+                                    : "bg-[#fce18d] text-[#873641] hover:bg-[#f8cc1b]"
+                                    }`}
                                 style={{
                                     fontFamily: "'Patrick Hand', cursive",
                                 }}
@@ -205,6 +210,22 @@ const PaymentFormPage: React.FC = () => {
                                 Cash
                             </button>
                         </div>
+
+                        {/* Paying Now checkbox — only shown when GCash is selected */}
+                        {paymentMode === "gcash" && (
+                            <label
+                                className="flex items-center gap-3 cursor-pointer select-none"
+                                style={{ fontFamily: "'Patrick Hand', cursive" }}
+                            >
+                                <input
+                                    type="checkbox"
+                                    checked={payingNow}
+                                    onChange={(e) => setPayingNow(e.target.checked)}
+                                    className="w-5 h-5 accent-[#f8cc1b] cursor-pointer"
+                                />
+                                <span className="text-[#873641] text-xl font-bold">Paying Now?</span>
+                            </label>
+                        )}
                     </div>
 
                     {/* Delivery Specific */}
@@ -316,4 +337,4 @@ const PaymentFormPage: React.FC = () => {
     );
 };
 
-export default PaymentFormPage;
+export default PurchaseFormPage;

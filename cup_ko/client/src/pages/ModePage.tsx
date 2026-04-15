@@ -13,7 +13,7 @@ const ModePage: React.FC = () => {
     const { items, total } = location.state || { items: [], total: 0 };
 
     const handleModeClick = (mode: 'physical' | 'delivery' | 'reservation') => {
-        navigate('/paymentform', { state: { mode, items, total } });
+        navigate('/purchaseform', { state: { mode, items, total } });
     };
 
     return (
