@@ -2,7 +2,7 @@ import express, { Application, Request, Response } from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
-import Order from "../models/order";
+import Order from "./models/order";
 
 dotenv.config();
 
@@ -31,31 +31,32 @@ const connectDB = async (): Promise<void> => {
     }
 };
 
-app.post("/saveOrder", async (req, res) => {
+app.post("/saveOrder", async (req: Request, res: Response) => {
     try {
         const {modePayment, customerName, items, totalPrice, modeBuying, customerUsername, roomBuilding} = req.body;
 
         const newOrder = new Order({
-          customerName,
-          items,
-          totalPrice,
-          modePayment,
-          modeBuying,
+            customerName,
+            items,
+            totalPrice,
+            modePayment,
+            modeBuying,
+            date: new Date(),
         })
 
         if(modeBuying === "reservation"){
-          newOrder.pickupTime = new Date(),
-          newOrder.customerUsername = customerUsername
+          newOrder.pickupTime = new Date();
+          newOrder.customerUsername = customerUsername;
         }else if(modeBuying === "delivery"){
-          newOrder.location = roomBuilding,
-          newOrder.customerUsername = customerUsername
+          newOrder.location = roomBuilding;
+          newOrder.customerUsername = customerUsername;
         }
 
         await newOrder.save();
 
         res.status(201).json({message: "order placed"});
 
-    } catch (err) {
+    } catch (err: unknown) {
         console.error(err);
         res.status(400).json({
             error: "order fail",

@@ -2,7 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
-import Order from "../models/order.js";
+import Order from "./models/order.js";
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -35,14 +35,15 @@ app.post("/saveOrder", async (req, res) => {
             totalPrice,
             modePayment,
             modeBuying,
+            date: new Date(),
         });
         if (modeBuying === "reservation") {
-            newOrder.pickupTime = new Date(),
-                newOrder.customerUsername = customerUsername;
+            newOrder.pickupTime = new Date();
+            newOrder.customerUsername = customerUsername;
         }
         else if (modeBuying === "delivery") {
-            newOrder.location = roomBuilding,
-                newOrder.customerUsername = customerUsername;
+            newOrder.location = roomBuilding;
+            newOrder.customerUsername = customerUsername;
         }
         await newOrder.save();
         res.status(201).json({ message: "order placed" });
@@ -62,3 +63,4 @@ const start = async () => {
     });
 };
 start();
+//# sourceMappingURL=index.js.map
