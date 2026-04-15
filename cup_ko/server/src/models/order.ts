@@ -11,7 +11,7 @@ const orderSchema = new mongoose.Schema({
     totalPrice: { type: Number, required: true },
     modePayment: { type: String, enum: ["cash", "gcash"], required: true },
     modeBuying: { type: String, enum: ["reservation", "physical", "delivery"], required: true },
-    status: { type: String, enum: ["pending", "done"], required: true, default: "pending" },
+    status: { type: String, enum: ["pending", "paid", "done"], required: true, default: "pending" },
     date: { type: Date, required: true },
     pickupTime: { type: Date },
     customerUsername: { type: String },

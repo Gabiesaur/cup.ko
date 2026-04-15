@@ -23,7 +23,7 @@ const PaymentPage: React.FC = () => {
             const response = await fetch(`http://localhost:5000/updateOrder/${orderId}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ gcashRefNo: referenceNumber.trim() }),
+                body: JSON.stringify({ gcashRefNo: referenceNumber.trim(), status: "paid" }),
             });
 
             if (response.ok) {

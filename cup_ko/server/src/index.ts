@@ -33,7 +33,7 @@ const connectDB = async (): Promise<void> => {
 
 app.post("/saveOrder", async (req: Request, res: Response) => {
     try {
-        const {modePayment, customerName, items, totalPrice, modeBuying, customerUsername, roomBuilding} = req.body;
+        const { modePayment, customerName, items, totalPrice, modeBuying, customerUsername, roomBuilding } = req.body;
 
         const newOrder = new Order({
             customerName,
@@ -44,12 +44,12 @@ app.post("/saveOrder", async (req: Request, res: Response) => {
             date: new Date(),
         })
 
-        if(modeBuying === "reservation"){
-          newOrder.pickupTime = new Date();
-          newOrder.customerUsername = customerUsername;
-        }else if(modeBuying === "delivery"){
-          newOrder.location = roomBuilding;
-          newOrder.customerUsername = customerUsername;
+        if (modeBuying === "reservation") {
+            newOrder.pickupTime = new Date();
+            newOrder.customerUsername = customerUsername;
+        } else if (modeBuying === "delivery") {
+            newOrder.location = roomBuilding;
+            newOrder.customerUsername = customerUsername;
         }
 
         await newOrder.save();
@@ -68,10 +68,10 @@ app.post("/saveOrder", async (req: Request, res: Response) => {
 
 app.patch("/updateOrder/:id", async (req: Request, res: Response) => {
     try {
-        const { gcashRefNo } = req.body;
+        const { gcashRefNo, status } = req.body;
         const updated = await Order.findByIdAndUpdate(
             req.params.id,
-            { gcashRefNo },
+            { gcashRefNo, status },
             { new: true }
         );
         if (!updated) {
