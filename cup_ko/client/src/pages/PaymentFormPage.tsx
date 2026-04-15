@@ -5,7 +5,7 @@ import cart from "../assets/cart.png";
 import left from "../assets/mob_left.png";
 import right from "../assets/mob_right.png";
 
-type BuyingMode = "physical store" | "delivery" | "reservation";
+type BuyingMode = "physical" | "delivery" | "reservation";
 
 const PaymentFormPage: React.FC = () => {
     const navigate = useNavigate();
@@ -18,6 +18,7 @@ const PaymentFormPage: React.FC = () => {
     const [name, setName] = useState("");
     const [roomBuilding, setRoomBuilding] = useState("");
     const [username, setUsername] = useState("");
+    const [pickupTime, setPickupTime] = useState("");
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [paymentMode, setPaymentMode] = useState<"gcash" | "cash" | "">("");
 
@@ -31,25 +32,55 @@ const PaymentFormPage: React.FC = () => {
     };
 
     const handleSave = async () => {
+        if (!name || !paymentMode) {
+            alert("Please fill in all required fields");
+            return;
+        }
+
+        if (mode === "delivery" && !roomBuilding) {
+            alert("Please enter room & building");
+            return;
+        }
+
+        if (mode === "reservation" && !pickupTime) {
+            alert("Please select pickup time");
+            return;
+        }
+
+        if ((mode === "delivery" || mode === "reservation") && !username) {
+            alert("Please enter your ig/fb contact");
+            return;
+        }
+
         try {
             const response = await fetch("http://localhost:5000/saveOrder", {
                 method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
                 body: JSON.stringify({
-                    modePayment: mode,
+                    modePayment: paymentMode,
                     customerName: name,
-                    items,
-                    totalPrice: total,
+                    items: items || [],
+                    totalPrice: total || 0,
                     modeBuying: mode,
                     customerUsername: username,
                     roomBuilding,
+                    pickupTime: mode === "reservation" ? pickupTime : null,
                 }),
             });
 
-            if(response.ok){
+            if (response.ok) {
                 console.log("order saved");
+                navigate("/");
+            } else {
+                const errorData = await response.json();
+                console.error("Server error:", errorData);
+                alert("Failed to save order: " + (errorData.error || "Unknown error"));
             }
         } catch (err) {
             console.error("order fail", err);
+            alert("Error saving order");
         }
     };
 
@@ -99,7 +130,7 @@ const PaymentFormPage: React.FC = () => {
                         {isDropdownOpen && (
                             <div className="absolute top-24 w-[90%] bg-[#cc8386] rounded-[20px] flex flex-col overflow-hidden shadow-xl border-2 border-[#f8cc1b]/20">
                                 {[
-                                    "physical store",
+                                    "physical",
                                     "delivery",
                                     "reservation",
                                 ].map((option) => (
@@ -226,6 +257,7 @@ const PaymentFormPage: React.FC = () => {
                                 style={{
                                     fontFamily: "'Patrick Hand', cursive",
                                 }}
+                                onChange={(e) => setPickupTime(e.target.value)}
                             />
                         </div>
                     )}

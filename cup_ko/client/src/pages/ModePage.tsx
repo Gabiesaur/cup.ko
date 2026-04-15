@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import cart from '../assets/cart.png';
 
 // Import your newly created components
@@ -9,9 +9,11 @@ import InfoBlock from '../components/InfoBlock';
 
 const ModePage: React.FC = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const { items, total } = location.state || { items: [], total: 0 };
 
-    const handleModeClick = (mode: 'physical store' | 'delivery' | 'reservation') => {
-        navigate('/paymentform', { state: { mode } });
+    const handleModeClick = (mode: 'physical' | 'delivery' | 'reservation') => {
+        navigate('/paymentform', { state: { mode, items, total } });
     };
 
     return (
@@ -21,7 +23,7 @@ const ModePage: React.FC = () => {
                 <InfoBlock
                     title="Physical Store"
                     description="Buying from the physical store means you are in line and will wait for your order in the physical store."
-                    onClick={() => handleModeClick('physical store')}
+                    onClick={() => handleModeClick('physical')}
                 />
 
                 <InfoBlock

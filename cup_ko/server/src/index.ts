@@ -57,9 +57,11 @@ app.post("/saveOrder", async (req: Request, res: Response) => {
         res.status(201).json({message: "order placed"});
 
     } catch (err: unknown) {
-        console.error(err);
+        console.error("Save order error:", err);
+        const errorMessage = err instanceof Error ? err.message : "Unknown error";
         res.status(400).json({
             error: "order fail",
+            details: errorMessage,
         });
     }
 });
