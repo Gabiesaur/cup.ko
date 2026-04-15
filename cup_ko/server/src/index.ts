@@ -86,6 +86,21 @@ app.patch("/updateOrder/:id", async (req: Request, res: Response) => {
     }
 });
 
+app.get("/getOrder/:id", async (req: Request, res: Response) => {
+    try {
+        const order = await Order.findById(req.params.id);
+        if (!order) {
+            res.status(404).json({ error: "Order not found" });
+            return;
+        }
+        res.status(200).json(order);
+    } catch (err: unknown) {
+        console.error("Fetch order error:", err);
+        const errorMessage = err instanceof Error ? err.message : "Unknown error";
+        res.status(400).json({ error: "fetch fail", details: errorMessage });
+    }
+});
+
 // Start Server
 const start = async (): Promise<void> => {
     await connectDB();

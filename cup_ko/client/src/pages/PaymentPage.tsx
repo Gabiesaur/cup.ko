@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import cart from '../assets/cart.png';
 import gcashQr from '../assets/gcash_qr.jpg';
@@ -9,9 +9,34 @@ import PinkCard from '../components/PinkCard';
 const PaymentPage: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
+
+    // Only extracting orderId from state now
     const { orderId } = location.state || {};
 
     const [referenceNumber, setReferenceNumber] = useState('');
+    // NEW: State to hold the fetched total price
+    const [totalPrice, setTotalPrice] = useState<number | null>(null);
+
+    // NEW: Fetch the order details from the database when the component mounts
+    useEffect(() => {
+        const fetchOrderDetails = async () => {
+            if (!orderId) return;
+
+            try {
+                const response = await fetch(`http://localhost:5000/getOrder/${orderId}`);
+                if (response.ok) {
+                    const orderData = await response.json();
+                    setTotalPrice(orderData.totalPrice);
+                } else {
+                    console.error('Failed to fetch order data');
+                }
+            } catch (err) {
+                console.error('Error fetching order:', err);
+            }
+        };
+
+        fetchOrderDetails();
+    }, [orderId]);
 
     const handleNext = async () => {
         if (!referenceNumber.trim()) {
@@ -48,14 +73,27 @@ const PaymentPage: React.FC = () => {
         <PageLayout>
             <PinkCard title="gcash payment" icon={cart}>
 
-                {/* QR Code */}
+                {/* Top Section: Total Price & QR Code */}
                 <div className="flex flex-col items-center gap-2 w-full px-4">
+
+                    {/* Total Price Display */}
+                    <h2
+                        className="text-[#873641] text-2xl md:text-3xl font-bold text-center mt-2"
+                        style={{ fontFamily: "'Patrick Hand', cursive" }}
+                    >
+                        Your total is{' '}
+                        <span className="text-4xl md:text-5xl text-[#e08a1d] drop-shadow-sm ml-1">
+                            {totalPrice !== null ? `P${totalPrice.toFixed(2)}` : 'Loading...'}
+                        </span>
+                    </h2>
+
                     <p
-                        className="text-[#873641] text-base md:text-lg font-bold text-center"
+                        className="text-[#873641] text-base md:text-lg font-bold text-center mt-2"
                         style={{ fontFamily: "'Patrick Hand', cursive" }}
                     >
                         Scan the QR code below to pay via GCash / InstaPay
                     </p>
+
                     <img
                         src={gcashQr}
                         alt="GCash QR Code"
@@ -64,7 +102,7 @@ const PaymentPage: React.FC = () => {
                 </div>
 
                 {/* Reference Number Input */}
-                <div className="w-full flex flex-col gap-2 px-4 md:px-10">
+                <div className="w-full flex flex-col gap-2 px-4 md:px-10 mt-4">
                     <label
                         className="text-[#873641] text-xl md:text-2xl font-bold"
                         style={{ fontFamily: "'Patrick Hand', cursive" }}
@@ -90,7 +128,7 @@ const PaymentPage: React.FC = () => {
                 </div>
 
                 {/* Buttons Row */}
-                <div className="relative w-full flex justify-between items-center px-4 md:px-10 pb-2">
+                <div className="relative w-full flex justify-between items-center px-4 md:px-10 pb-2 mt-2">
                     {/* Pay Later */}
                     <button
                         onClick={handlePayLater}
