@@ -109,11 +109,11 @@ const PurchaseFormPage: React.FC = () => {
                 alt="Left decorative"
             />
 
-            <div className="flex flex-col items-center z-10">
+            <div className="flex flex-col items-center z-10 w-full max-w-[650px]">
                 {/* Main Pink Container */}
-                <div className="relative h-[650px] w-[650px] bg-[#cc8386] rounded-[40px] flex flex-col justify-start items-start pt-10 px-12 pb-12 gap-6 shadow-lg">
+                <div className="relative h-auto md:h-[650px] w-full md:w-[650px] bg-[#cc8386] rounded-[40px] flex flex-col justify-start items-start pt-16 md:pt-10 px-6 md:px-12 pb-20 md:pb-12 gap-6 shadow-lg">
                     {/* Header Badge / Dropdown Container */}
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] z-50 flex flex-col items-center">
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] md:w-[450px] z-50 flex flex-col items-center">
                         {/* Main Button */}
                         <button
                             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -316,7 +316,7 @@ const PurchaseFormPage: React.FC = () => {
 
                     {/* Next Button */}
                     <button
-                        className="absolute -bottom-6 -right-6 bg-[#fce18d] text-[#e1a0aa] text-3xl hover:bg-[#e08a1d] transition-colors rounded-[30px] px-14 py-3 shadow-md z-0"
+                        className="absolute -bottom-6 left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 md:-right-6 bg-[#fce18d] text-[#e1a0aa] text-3xl hover:bg-[#e08a1d] transition-colors rounded-[30px] px-14 py-3 shadow-md z-0"
                         style={{
                             fontFamily: "Opun Mai Bold Italic",
                             fontWeight: "bold",
