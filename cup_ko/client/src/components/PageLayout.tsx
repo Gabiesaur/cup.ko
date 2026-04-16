@@ -11,7 +11,7 @@ interface PageLayoutProps {
 const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
     return (
         <div
-            className="flex justify-center items-center overflow-hidden gap-2 md:gap-8 min-h-screen w-full px-4 py-12 md:py-0 md:px-0"
+            className="relative flex justify-center items-center  h-screen w-full"
             style={{
                 backgroundImage: `url(${mob_bg})`,
                 backgroundSize: 'cover',
@@ -19,12 +19,14 @@ const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
                 backgroundRepeat: 'no-repeat',
             }}
         >
-            <img src={left} className='hidden md:block w-[15%] lg:w-[20%]' alt="left decoration" />
-            
-            {/* The main content gets injected here */}
-            {children}
+            <img src={left} className='hidden md:block absolute left-0 w-[22%] lg:w-[28%] z-0' alt="left decoration" />
 
-            <img src={right} className='hidden md:block w-[15%] lg:w-[20%]' alt="right decoration" />
+            {/* The main content gets injected here */}
+            <div className="z-10">
+                {children}
+            </div>
+
+            <img src={right} className='hidden md:block absolute right-0 w-[22%] lg:w-[28%] z-0' alt="right decoration" />
         </div>
     );
 };

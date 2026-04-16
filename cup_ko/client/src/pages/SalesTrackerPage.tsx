@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import main_bg from "../assets/main_bg.png";
+import PageLayout from "../components/PageLayout";
 
 type OrderItem = {
   name: string;
@@ -165,17 +166,7 @@ const SalesTrackerPage: React.FC = () => {
   };
 
   return (
-    <div
-      className="flex justify-center items-center overflow-hidden gap-8"
-      style={{
-        backgroundImage: `url(${main_bg})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        minHeight: "100vh",
-        width: "100%",
-      }}
-    >
+    <PageLayout>
       <div className="flex flex-col items-center">
         <div className="relative min-h-180 w-[95vw] max-w-275 bg-[#cc8386] rounded-4xl flex flex-col justify-start items-center gap-4 py-12 px-6">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 h-20 w-120 bg-[#cc8386] rounded-4xl flex flex-row justify-center items-center">
@@ -465,7 +456,7 @@ const SalesTrackerPage: React.FC = () => {
             </div>
           </div>
         )}
-    </div>
+    </PageLayout>
   );
 };
 
