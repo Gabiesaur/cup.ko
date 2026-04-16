@@ -6,6 +6,8 @@ import gcashQr from '../assets/gcash_qr.jpg';
 import PageLayout from '../components/PageLayout';
 import PinkCard from '../components/PinkCard';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 const PaymentPage: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -23,7 +25,7 @@ const PaymentPage: React.FC = () => {
             if (!orderId) return;
 
             try {
-                const response = await fetch(`http://localhost:5000/getOrder/${orderId}`);
+                const response = await fetch(`${API_URL}/getOrder/${orderId}`);
                 if (response.ok) {
                     const orderData = await response.json();
                     setTotalPrice(orderData.totalPrice);
@@ -45,7 +47,7 @@ const PaymentPage: React.FC = () => {
         }
 
         try {
-            const response = await fetch(`http://localhost:5000/updateOrder/${orderId}`, {
+            const response = await fetch(`${API_URL}/updateOrder/${orderId}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ gcashRefNo: referenceNumber.trim(), status: "paid" }),

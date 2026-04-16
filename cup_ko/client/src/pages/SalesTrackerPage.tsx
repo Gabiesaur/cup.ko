@@ -2,6 +2,8 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageLayout from "../components/PageLayout";
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 type OrderItem = {
   name: string;
   quantity: number;
@@ -48,7 +50,7 @@ const SalesTrackerPage: React.FC = () => {
       setErrorMessage(null);
 
       const response = await fetch(
-        `http://localhost:5000/updateOrder/${order._id}`,
+        `${API_URL}/updateOrder/${order._id}`,
         {
           method: "PATCH",
           headers: {
@@ -88,7 +90,7 @@ const SalesTrackerPage: React.FC = () => {
       setErrorMessage(null);
 
       const response = await fetch(
-        `http://localhost:5000/deleteOrder/${orderId}`,
+        `${API_URL}/deleteOrder/${orderId}`,
         {
           method: "DELETE",
         },
@@ -114,7 +116,7 @@ const SalesTrackerPage: React.FC = () => {
       try {
         setIsLoading(true);
         setErrorMessage(null);
-        const response = await fetch("http://localhost:5000/getOrders");
+        const response = await fetch(`${API_URL}/getOrders`);
 
         if (!response.ok) {
           throw new Error(`Failed to fetch orders (${response.status})`);
