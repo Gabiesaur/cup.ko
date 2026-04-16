@@ -92,7 +92,8 @@ const ThankYouPage: React.FC = () => {
             {/* Right Column: Floating Food Images — behind text */}
             <div className="hidden md:flex absolute top-0 right-0 w-[65%] md:w-[72%] h-full items-center justify-end pointer-events-none z-0 md:pt-25">
                 <img
-                    src={food_images}
+                    // src={food_images}
+                    src="https://media1.tenor.com/m/bMo9DEDirN0AAAAd/thank-you-thank-you-bro.gif"
                     alt="Assortment of chewy cakes"
                     className="w-full h-full object-contain object-right drop-shadow-2xl"
                 />
