@@ -7,6 +7,7 @@ import ModePage from "./pages/ModePage.tsx";
 import SalesTrackerPage from "./pages/SalesTrackerPage.tsx";
 import PurchaseFormPage from "./pages/PurchaseFormPage.tsx";
 import PaymentPage from "./pages/PaymentPage.tsx";
+import ThankYouPage from "./pages/ThankYou.tsx";
 import Mango_Coconut from "./assets/Mango_Coconut.png";
 import Mango_Graham from "./assets/Mango_Graham.png";
 import Mango_Rice from "./assets/Mango_Rice.png";
@@ -117,6 +118,7 @@ function App() {
             />
           }
         />
+        <Route path="/thank-you" element={<ThankYouPage />} />
       </Routes>
     </BrowserRouter>
   );
