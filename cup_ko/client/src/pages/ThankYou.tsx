@@ -50,7 +50,7 @@ const ThankYouPage: React.FC = () => {
             </div>
 
             {/* Main Content Container */}
-            <div className="relative z-10 w-full h-full max-w-[1440px] mx-auto flex flex-col justify-center">
+            <div className="relative z-10 w-full h-full max-w-[1440px] flex flex-col justify-center lg:pl-10">
                 
                 {/* Left Column: Typography & CTA */}
                 {/* Added mt-32 on mobile to push the text below the stacked logos */}
