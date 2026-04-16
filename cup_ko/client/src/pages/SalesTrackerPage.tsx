@@ -21,6 +21,7 @@ type Order = {
   location?: string;
   customerUsername?: string;
   pickupTime?: string;
+  gcashRefNo?: string;
 };
 
 type StatusFilter = "all" | Order["status"];
@@ -349,7 +350,8 @@ const SalesTrackerPage: React.FC = () => {
                       <td className="py-3 px-2">
                         <div className="flex items-center gap-2">
                           {(order.modeBuying === "delivery" ||
-                            order.modeBuying === "reservation") && (
+                            order.modeBuying === "reservation" ||
+                            (order.modePayment === "gcash" && order.gcashRefNo)) && (
                               <button
                                 onClick={() => setSelectedOrder(order)}
                                 className="rounded-full bg-[#e08a1d] px-3 py-1 text-sm font-bold text-white hover:bg-[#c87413]"
@@ -385,7 +387,8 @@ const SalesTrackerPage: React.FC = () => {
 
       {selectedOrder &&
         (selectedOrder.modeBuying === "delivery" ||
-          selectedOrder.modeBuying === "reservation") && (
+          selectedOrder.modeBuying === "reservation" ||
+          selectedOrder.modePayment === "gcash") && (
           <div
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 py-6"
             onClick={() => setSelectedOrder(null)}
@@ -401,7 +404,9 @@ const SalesTrackerPage: React.FC = () => {
                 >
                   {selectedOrder.modeBuying === "delivery"
                     ? "Delivery Details"
-                    : "Reservation Details"}
+                    : selectedOrder.modeBuying === "reservation"
+                      ? "Reservation Details"
+                      : "Payment Details"}
                 </h2>
                 <button
                   onClick={() => setSelectedOrder(null)}
@@ -452,6 +457,17 @@ const SalesTrackerPage: React.FC = () => {
                       </p>
                     </div>
                   </>
+                )}
+
+                {selectedOrder.modePayment === "gcash" && (
+                  <div>
+                    <p className="text-sm font-bold uppercase tracking-wide opacity-80">
+                      GCash Reference Number
+                    </p>
+                    <p className="text-xl font-bold">
+                      {selectedOrder.gcashRefNo || "Not provided"}
+                    </p>
+                  </div>
                 )}
               </div>
             </div>

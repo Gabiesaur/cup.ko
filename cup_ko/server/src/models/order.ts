@@ -24,6 +24,7 @@ const orderSchema = new mongoose.Schema({
     required: true,
     default: "pending",
   },
+  gcashRefNo: { type: String },
   date: { type: Date, required: true },
   pickupTime: { type: Date },
   customerUsername: { type: String },
