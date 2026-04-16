@@ -41,6 +41,7 @@ app.post("/saveOrder", async (req: Request, res: Response) => {
       modeBuying,
       customerUsername,
       roomBuilding,
+      pickupTime,
     } = req.body;
 
     const newOrder = new Order({
@@ -53,7 +54,7 @@ app.post("/saveOrder", async (req: Request, res: Response) => {
     });
 
     if (modeBuying === "reservation") {
-      newOrder.pickupTime = new Date();
+      newOrder.pickupTime = pickupTime ? new Date(pickupTime) : new Date();
       newOrder.customerUsername = customerUsername;
     } else if (modeBuying === "delivery") {
       newOrder.location = roomBuilding;

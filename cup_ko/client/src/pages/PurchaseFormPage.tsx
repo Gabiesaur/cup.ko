@@ -15,7 +15,17 @@ const PurchaseFormPage: React.FC = () => {
     const [name, setName] = useState("");
     const [roomBuilding, setRoomBuilding] = useState("");
     const [username, setUsername] = useState("");
-    const [pickupTime, setPickupTime] = useState("");
+
+    // Initialize with today's date at 12:00 PM for better UX
+    const getTodayDefault = () => {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, "0");
+        const day = String(now.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}T12:00`;
+    };
+    
+    const [pickupTime, setPickupTime] = useState(getTodayDefault());
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [paymentMode, setPaymentMode] = useState<"gcash" | "cash" | "">("");
     const [payingNow, setPayingNow] = useState(false);
@@ -221,12 +231,13 @@ const PurchaseFormPage: React.FC = () => {
                                 className="text-[#873641] text-2xl font-bold"
                                 style={{ fontFamily: "'Patrick Hand', cursive" }}
                             >
-                                Time of pickup:
+                                Time and Date of pickup:
                             </label>
                             <input
-                                type="time"
+                                type="datetime-local"
                                 className="w-full bg-[#fce18d] text-[#873641] rounded-full px-6 py-4 text-xl outline-none placeholder-[#873641]/70"
                                 style={{ fontFamily: "'Patrick Hand', cursive" }}
+                                value={pickupTime}
                                 onChange={(e) => setPickupTime(e.target.value)}
                             />
                         </div>
