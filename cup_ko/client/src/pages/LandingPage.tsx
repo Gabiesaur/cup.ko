@@ -24,7 +24,7 @@ const LandingPage: React.FC = () => {
                 <img
                     src={logo}
                     alt="Trese Chewy Cake Logo"
-                    className="w-40 drop-shadow-md"
+                    className="w-42 drop-shadow-md"
                 />
                 <img
                     src={ust_logo}
@@ -38,7 +38,7 @@ const LandingPage: React.FC = () => {
                 <img
                     src={logo}
                     alt="Trese Chewy Cake Logo"
-                    className="w-40 drop-shadow-md"
+                    className="w-42 drop-shadow-md"
                 />
             </div>
             <div className="hidden md:block absolute top-2 left-50 z-20">

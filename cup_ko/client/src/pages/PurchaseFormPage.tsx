@@ -75,7 +75,7 @@ const PurchaseFormPage: React.FC = () => {
                 if (payingNow) {
                     navigate("/payment", { state: { orderId: data.orderId } });
                 } else {
-                    navigate("/");
+                    navigate("/thank-you");
                 }
             } else {
                 const errorData = await response.json();

@@ -53,7 +53,7 @@ const PaymentPage: React.FC = () => {
 
             if (response.ok) {
                 console.log('Order updated with ref no.');
-                navigate('/');
+                navigate('/thank-you');
             } else {
                 const errorData = await response.json();
                 console.error('Server error:', errorData);
