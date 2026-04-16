@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import main_bg from "../assets/main_bg.png";
 import PageLayout from "../components/PageLayout";
 
 type OrderItem = {
@@ -323,9 +322,9 @@ const SalesTrackerPage: React.FC = () => {
                             handleUpdateStatus(
                               order,
                               event.target.value as
-                                | "pending"
-                                | "paid"
-                                | "completed",
+                              | "pending"
+                              | "paid"
+                              | "completed",
                             )
                           }
                           disabled={activeOrderId === order._id}
@@ -349,13 +348,13 @@ const SalesTrackerPage: React.FC = () => {
                         <div className="flex items-center gap-2">
                           {(order.modeBuying === "delivery" ||
                             order.modeBuying === "reservation") && (
-                            <button
-                              onClick={() => setSelectedOrder(order)}
-                              className="rounded-full bg-[#e08a1d] px-3 py-1 text-sm font-bold text-white hover:bg-[#c87413]"
-                            >
-                              Details
-                            </button>
-                          )}
+                              <button
+                                onClick={() => setSelectedOrder(order)}
+                                className="rounded-full bg-[#e08a1d] px-3 py-1 text-sm font-bold text-white hover:bg-[#c87413]"
+                              >
+                                Details
+                              </button>
+                            )}
                           <button
                             onClick={() => handleDeleteOrder(order._id)}
                             disabled={activeOrderId === order._id}
