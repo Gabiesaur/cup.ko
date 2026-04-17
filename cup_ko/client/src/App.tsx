@@ -23,14 +23,14 @@ import Pandan_Sesame from "./assets/Pandan_Sesame.png";
 import type { CartItem, Product } from "./types/shop";
 
 const products: Product[] = [
-  { id: 1, name: "Chewy Pandan Cake w/ Sesame Seed", price: 40, image: Pandan_Sesame },
-  { id: 2, name: "Chewy Pandan Cake w/ Rice Krispy", price: 40, image: Pandan_Rice },
-  { id: 3, name: "Chewy Pandan Cake w/ Graham Powder", price: 40, image: Pandan_Graham },
-  { id: 4, name: "Chewy Pandan Cake w/ Coconut Flakes", price: 40, image: Pandan_Coconut },
-  { id: 5, name: "Chewy Ube Cake w/ Sesame Seed", price: 40, image: Ube_Sesame },
-  { id: 6, name: "Chewy Ube Cake w/ Rice Krispy", price: 40, image: Ube_Rice },
-  { id: 7, name: "Chewy Ube Cake w/ Graham Powder", price: 40, image: Ube_Graham },
-  { id: 8, name: "Chewy Ube Cake w/ Coconut Flakes", price: 40, image: Ube_Coconut },
+  { id: 1, name: "Chewy Pandan Cake w/ Sesame Seed", price: 35, image: Pandan_Sesame },
+  { id: 2, name: "Chewy Pandan Cake w/ Rice Krispy", price: 35, image: Pandan_Rice },
+  { id: 3, name: "Chewy Pandan Cake w/ Graham Powder", price: 35, image: Pandan_Graham },
+  { id: 4, name: "Chewy Pandan Cake w/ Coconut Flakes", price: 35, image: Pandan_Coconut },
+  { id: 5, name: "Chewy Ube Cake w/ Sesame Seed", price: 35, image: Ube_Sesame },
+  { id: 6, name: "Chewy Ube Cake w/ Rice Krispy", price: 35, image: Ube_Rice },
+  { id: 7, name: "Chewy Ube Cake w/ Graham Powder", price: 35, image: Ube_Graham },
+  { id: 8, name: "Chewy Ube Cake w/ Coconut Flakes", price: 35, image: Ube_Coconut },
   { id: 9, name: "Chewy Mango Cake w/ Sesame Seed", price: 40, image: Mango_Sesame },
   { id: 10, name: "Chewy Mango Cake w/ Rice Krispy", price: 40, image: Mango_Rice },
   { id: 11, name: "Chewy Mango Cake w/ Graham Powder", price: 40, image: Mango_Graham },

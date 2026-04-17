@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import Order from "./models/order";
+import Settings from "./models/settings";
+import bcrypt from "bcrypt";
 
 dotenv.config();
 
@@ -158,6 +160,47 @@ app.get("/getOrders", async (_req: Request, res: Response) => {
     console.error("Fetch orders error:", err);
     const errorMessage = err instanceof Error ? err.message : "Unknown error";
     res.status(400).json({ error: "fetch orders fail", details: errorMessage });
+  }
+});
+
+app.post("/verifyPassword", async (req: Request, res: Response) => {
+  try {
+    const { password } = req.body;
+    
+    if (!password) {
+      res.status(400).json({ error: "Password is required" });
+      return;
+    }
+
+    const allSettings = await Settings.find();
+    
+    // First time setup
+    if (allSettings.length === 0) {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+      const newSettings = new Settings({ adminPasswordHash: hashedPassword });
+      await newSettings.save();
+      res.status(200).json({ success: true, message: "Password set successfully" });
+      return;
+    }
+
+    // Verify existing passwords
+    let isMatch = false;
+    for (const setting of allSettings) {
+      if (await bcrypt.compare(password, setting.adminPasswordHash)) {
+        isMatch = true;
+        break;
+      }
+    }
+
+    if (isMatch) {
+      res.status(200).json({ success: true });
+    } else {
+      res.status(401).json({ error: "Invalid password" });
+    }
+  } catch (err) {
+    console.error("Password verification error:", err);
+    res.status(500).json({ error: "Server error" });
   }
 });
 

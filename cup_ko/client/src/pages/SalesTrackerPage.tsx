@@ -38,6 +38,13 @@ const SalesTrackerPage: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
+    () => sessionStorage.getItem("salesTrackerAuth") === "true"
+  );
+  const [passwordInput, setPasswordInput] = useState("");
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
+  const [authError, setAuthError] = useState<string | null>(null);
+
   const handleUpdateStatus = async (
     order: Order,
     nextStatus: "pending" | "paid" | "completed",
@@ -112,30 +119,63 @@ const SalesTrackerPage: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        setIsLoading(true);
-        setErrorMessage(null);
-        const response = await fetch(`${API_URL}/getOrders`);
+  const fetchOrders = async () => {
+    try {
+      setIsLoading(true);
+      setErrorMessage(null);
+      const response = await fetch(`${API_URL}/getOrders`);
 
-        if (!response.ok) {
-          throw new Error(`Failed to fetch orders (${response.status})`);
-        }
-
-        const data = (await response.json()) as Order[];
-        setOrders(data);
-      } catch (error) {
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
-        setErrorMessage(message);
-      } finally {
-        setIsLoading(false);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch orders (${response.status})`);
       }
-    };
 
-    void fetchOrders();
-  }, []);
+      const data = (await response.json()) as Order[];
+      setOrders(data);
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Unknown error";
+      setErrorMessage(message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      void fetchOrders();
+    }
+  }, [isAuthenticated]);
+
+  const handleLogin = async () => {
+    if (!passwordInput) {
+      setAuthError("Please enter a password");
+      return;
+    }
+    
+    try {
+      setIsAuthenticating(true);
+      setAuthError(null);
+      const response = await fetch(`${API_URL}/verifyPassword`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ password: passwordInput }),
+      });
+      
+      const data = await response.json();
+      if (response.ok && data.success) {
+        sessionStorage.setItem("salesTrackerAuth", "true");
+        setIsAuthenticated(true);
+      } else {
+        setAuthError(data.error || "Invalid password");
+      }
+    } catch (err) {
+      setAuthError("Server communication error");
+    } finally {
+      setIsAuthenticating(false);
+    }
+  };
 
   const totalSales = useMemo(
     () =>
@@ -166,6 +206,67 @@ const SalesTrackerPage: React.FC = () => {
 
     return new Date(pickupTime).toLocaleString();
   };
+
+  if (!isAuthenticated) {
+    return (
+      <PageLayout>
+        <div className="flex flex-col items-center z-10 w-full max-w-[650px] mx-auto mt-8 md:mt-2">
+          {/* Main Pink Container matching PurchaseFormPage */}
+          <div className="relative h-auto md:h-[500px] w-full md:w-[650px] bg-[#cc8386] rounded-[40px] flex flex-col justify-center items-center pt-24 px-6 md:px-12 pb-20 md:pb-12 gap-8 shadow-lg">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] md:w-[450px] z-50 flex flex-col items-center">
+              <div className="h-20 w-full bg-[#cc8386] rounded-[40px] flex flex-row justify-center items-center gap-4 shadow-md">
+                <p
+                  className="text-[#f8cc1b] text-4xl md:text-5xl font-bold [text-shadow:2px_3px_2px_#a8606c]"
+                  style={{ fontFamily: "Opun Mai Bold Italic" }}
+                >
+                  sales tracker
+                </p>
+              </div>
+            </div>
+
+            <div className="w-full flex flex-col gap-4 relative z-0 items-center">
+              <label
+                className="text-white text-3xl font-bold text-center"
+                style={{ fontFamily: "'Patrick Hand', cursive" }}
+              >
+                Admin Access Requires Password
+              </label>
+              <input
+                type="password"
+                value={passwordInput}
+                onChange={(e) => setPasswordInput(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
+                className="w-full max-w-[400px] bg-[#fce18d] text-[#873641] rounded-full px-6 py-4 text-xl outline-none placeholder-[#873641]/70 mt-2"
+                style={{ fontFamily: "'Patrick Hand', cursive" }}
+                placeholder="Enter admin password..."
+              />
+              {authError && (
+                <p className="text-[#873641] bg-[#fce18d] px-4 py-2 rounded-full font-bold text-lg text-center mt-2" style={{ fontFamily: "'Patrick Hand', cursive" }}>
+                  {authError}
+                </p>
+              )}
+            </div>
+
+            <button
+              onClick={handleLogin}
+              disabled={isAuthenticating}
+              className="absolute -bottom-6 left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 md:-right-6 bg-[#fce18d] text-[#e1a0aa] text-3xl hover:bg-[#e08a1d] transition-colors rounded-[30px] px-14 py-3 shadow-md z-0 font-bold"
+              style={{ fontFamily: "Opun Mai Bold Italic" }}
+            >
+              {isAuthenticating ? "Wait..." : "Enter"}
+            </button>
+            <button
+              onClick={() => navigate("/")}
+              className="mt-6 bg-white/30 hover:bg-white/50 text-white rounded-full px-8 py-2 font-bold transition-colors"
+              style={{ fontFamily: "'Patrick Hand', cursive" }}
+            >
+               Cancel & Go Back
+            </button>
+          </div>
+        </div>
+      </PageLayout>
+    );
+  }
 
   return (
     <PageLayout>
@@ -375,13 +476,22 @@ const SalesTrackerPage: React.FC = () => {
             )}
           </div>
 
-          <button
-            onClick={() => navigate("/")}
-            className="mt-2 bg-[#fce18d] text-[#e1a0aa] text-2xl md:text-3xl hover:bg-[#e08a1d] transition-colors rounded-[30px] px-10 py-3 shadow-md font-bold"
-            style={{ fontFamily: "Opun Mai Bold Italic" }}
-          >
-            Back to Home
-          </button>
+          <div className="flex flex-col sm:flex-row gap-4 mt-2">
+            <button
+              onClick={() => navigate("/")}
+              className="bg-[#fce18d] text-[#e1a0aa] text-2xl md:text-3xl hover:bg-[#e08a1d] transition-colors rounded-[30px] px-10 py-3 shadow-md font-bold"
+              style={{ fontFamily: "Opun Mai Bold Italic" }}
+            >
+              Back to Home
+            </button>
+            <button
+              onClick={fetchOrders}
+              className="bg-[#e1a0aa] text-white text-2xl md:text-3xl hover:bg-[#c98e97] transition-colors rounded-[30px] px-10 py-3 shadow-md font-bold"
+              style={{ fontFamily: "Opun Mai Bold Italic" }}
+            >
+              Reload Data
+            </button>
+          </div>
         </div>
       </div>
 

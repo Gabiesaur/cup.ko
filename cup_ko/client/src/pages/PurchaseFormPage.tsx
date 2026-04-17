@@ -26,7 +26,7 @@ const PurchaseFormPage: React.FC = () => {
         const day = String(now.getDate()).padStart(2, "0");
         return `${year}-${month}-${day}T12:00`;
     };
-    
+
     const [pickupTime, setPickupTime] = useState(getTodayDefault());
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [paymentMode, setPaymentMode] = useState<"gcash" | "cash" | "">("");
@@ -58,7 +58,7 @@ const PurchaseFormPage: React.FC = () => {
         }
 
         if ((mode === "delivery" || mode === "reservation") && !username) {
-            alert("Please enter your ig/fb contact");
+            alert("Please enter your IG/FB contact");
             return;
         }
 
@@ -252,7 +252,7 @@ const PurchaseFormPage: React.FC = () => {
                                 className="text-[#873641] text-2xl font-bold"
                                 style={{ fontFamily: "'Patrick Hand', cursive" }}
                             >
-                                ig/fb contact:
+                                IG/FB contact:
                             </label>
                             <input
                                 type="text"

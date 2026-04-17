@@ -9,27 +9,13 @@ const LandingPage: React.FC = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="relative w-full h-screen min-h-[700px] overflow-hidden bg-[#fdfaf0]">
+        <div className="relative w-full min-h-dvh md:h-screen md:min-h-[700px] overflow-x-hidden overflow-y-auto md:overflow-hidden bg-[#fdfaf0]">
             {/* Background Vector */}
-            <div className="absolute inset-0 z-0">
+            <div className="absolute inset-0 z-0 pointer-events-none">
                 <img
                     src={landing_bg}
                     alt="Abstract pastel cloud background"
                     className="w-full h-full object-cover object-center"
-                />
-            </div>
-
-            {/* Logos - Mobile View (Stacked) */}
-            <div className="absolute top-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 z-20 md:hidden w-full">
-                <img
-                    src={logo}
-                    alt="Trese Chewy Cake Logo"
-                    className="w-42 drop-shadow-md"
-                />
-                <img
-                    src={ust_logo}
-                    alt="UST Logo"
-                    className="w-40 drop-shadow-md"
                 />
             </div>
 
@@ -50,11 +36,24 @@ const LandingPage: React.FC = () => {
             </div>
 
             {/* Main Content Container */}
-            <div className="relative z-10 w-full h-full max-w-[1440px] flex flex-col justify-center lg:pl-10">
+            <div className="relative z-10 w-full min-h-dvh md:h-full max-w-[1440px] flex flex-col justify-center lg:pl-10 py-12 md:py-0">
+
+                {/* Logos - Mobile View (Stacked) - Placed in document flow to prevent overlap */}
+                <div className="flex flex-col items-center gap-4 z-20 md:hidden w-full mb-8 pt-4 shrink-0">
+                    <img
+                        src={logo}
+                        alt="Trese Chewy Cake Logo"
+                        className="w-42 drop-shadow-md"
+                    />
+                    <img
+                        src={ust_logo}
+                        alt="UST Logo"
+                        className="w-40 drop-shadow-md"
+                    />
+                </div>
 
                 {/* Left Column: Typography & CTA */}
-                {/* Added mt-32 on mobile to push the text below the stacked logos */}
-                <div className="w-full md:w-[50%] flex flex-col items-center md:items-start z-20 mt-32 md:mt-0 pt-16 md:pt-0 md:pl-20">
+                <div className="w-full md:w-[50%] flex flex-col items-center md:items-start z-20 md:pl-20 shrink-0">
                     <h1
                         style={{ fontFamily: "Opun Mai Bold Italic" }}
                         className="w-1000 text-center md:text-left text-5xl md:text-6xl lg:text-7xl font-bold text-[#CE828E] leading-[1.1] italic mb-8"
