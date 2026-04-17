@@ -76,7 +76,7 @@ const PurchaseFormPage: React.FC = () => {
                     modeBuying: mode,
                     customerUsername: username,
                     roomBuilding,
-                    pickupTime: mode === "reservation" ? pickupTime : null,
+                    pickupTime: mode === "reservation" ? new Date(pickupTime).toISOString() : null,
                 }),
             });
 
