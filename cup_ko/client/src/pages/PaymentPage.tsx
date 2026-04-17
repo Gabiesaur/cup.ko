@@ -18,6 +18,7 @@ const PaymentPage: React.FC = () => {
     const [referenceNumber, setReferenceNumber] = useState('');
     // NEW: State to hold the fetched total price
     const [totalPrice, setTotalPrice] = useState<number | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     // NEW: Fetch the order details from the database when the component mounts
     useEffect(() => {
@@ -46,6 +47,8 @@ const PaymentPage: React.FC = () => {
             return;
         }
 
+        setIsLoading(true);
+
         try {
             const response = await fetch(`${API_URL}/updateOrder/${orderId}`, {
                 method: 'PATCH',
@@ -64,6 +67,8 @@ const PaymentPage: React.FC = () => {
         } catch (err) {
             console.error('Update failed:', err);
             alert('Error updating order');
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -143,10 +148,11 @@ const PaymentPage: React.FC = () => {
                     {/* Next */}
                     <button
                         onClick={handleNext}
-                        className="bg-[#fce18d] text-[#e1a0aa] text-2xl md:text-3xl hover:bg-[#e08a1d] transition-colors rounded-[30px] px-10 md:px-14 py-3 shadow-md font-bold"
+                        className="bg-[#fce18d] text-[#e1a0aa] text-2xl md:text-3xl hover:bg-[#e08a1d] transition-colors rounded-[30px] px-10 md:px-14 py-3 shadow-md font-bold disabled:opacity-50 disabled:cursor-not-allowed"
                         style={{ fontFamily: 'Opun Mai Bold Italic' }}
+                        disabled={isLoading}
                     >
-                        Next
+                        {isLoading ? 'Saving...' : 'Next'}
                     </button>
                 </div>
 

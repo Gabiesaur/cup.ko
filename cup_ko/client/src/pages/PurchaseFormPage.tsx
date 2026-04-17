@@ -31,6 +31,7 @@ const PurchaseFormPage: React.FC = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [paymentMode, setPaymentMode] = useState<"gcash" | "cash" | "">("");
     const [payingNow, setPayingNow] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         console.log(roomBuilding);
@@ -61,6 +62,8 @@ const PurchaseFormPage: React.FC = () => {
             alert("Please enter your IG/FB contact");
             return;
         }
+
+        setIsLoading(true);
 
         try {
             const response = await fetch(`${API_URL}/saveOrder`, {
@@ -97,6 +100,8 @@ const PurchaseFormPage: React.FC = () => {
         } catch (err) {
             console.error("order fail", err);
             alert("Error saving order");
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -276,11 +281,12 @@ const PurchaseFormPage: React.FC = () => {
 
                     {/* Next Button */}
                     <button
-                        className="absolute -bottom-6 left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 md:-right-6 bg-[#fce18d] text-[#e1a0aa] text-3xl hover:bg-[#e08a1d] transition-colors rounded-[30px] px-14 py-3 shadow-md z-0"
+                        className="absolute -bottom-6 left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 md:-right-6 bg-[#fce18d] text-[#e1a0aa] text-3xl hover:bg-[#e08a1d] transition-colors rounded-[30px] px-14 py-3 shadow-md z-0 disabled:opacity-50 disabled:cursor-not-allowed"
                         style={{ fontFamily: "Opun Mai Bold Italic", fontWeight: "bold" }}
                         onClick={handleSave}
+                        disabled={isLoading}
                     >
-                        Next
+                        {isLoading ? 'Saving...' : 'Next'}
                     </button>
                 </div>
             </div>
