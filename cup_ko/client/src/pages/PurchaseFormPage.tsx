@@ -176,7 +176,10 @@ const PurchaseFormPage: React.FC = () => {
                                 GCash
                             </button>
                             <button
-                                onClick={() => setPaymentMode("cash")}
+                                onClick={() => {
+                                    setPaymentMode("cash");
+                                    setPayingNow(false);
+                                }}
                                 className={`flex-1 py-4 px-6 rounded-full text-xl font-bold transition-colors ${paymentMode === "cash" ? "bg-[#f8cc1b] text-[#873641]" : "bg-[#fce18d] text-[#873641] hover:bg-[#f8cc1b]"}`}
                                 style={{ fontFamily: "'Patrick Hand', cursive" }}
                             >
