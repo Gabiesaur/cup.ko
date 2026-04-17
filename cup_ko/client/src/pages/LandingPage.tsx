@@ -9,7 +9,7 @@ const LandingPage: React.FC = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="relative w-full min-h-dvh md:h-screen md:min-h-[700px] overflow-x-hidden overflow-y-auto md:overflow-hidden bg-[#fdfaf0]">
+        <div className="relative w-full min-h-dvh lg:h-screen lg:min-h-[700px] overflow-x-hidden overflow-y-auto lg:overflow-hidden bg-[#fdfaf0]">
             {/* Background Vector */}
             <div className="absolute inset-0 z-0 pointer-events-none">
                 <img
@@ -20,14 +20,14 @@ const LandingPage: React.FC = () => {
             </div>
 
             {/* Logos - Desktop View (Side by Side) */}
-            <div className="hidden md:block absolute top-2 left-2 z-20">
+            <div className="hidden lg:block absolute top-2 left-2 z-20">
                 <img
                     src={logo}
                     alt="Trese Chewy Cake Logo"
                     className="w-42 drop-shadow-md"
                 />
             </div>
-            <div className="hidden md:block absolute top-2 left-50 z-20">
+            <div className="hidden lg:block absolute top-2 left-50 z-20">
                 <img
                     src={ust_logo}
                     alt="UST Logo"
@@ -36,10 +36,10 @@ const LandingPage: React.FC = () => {
             </div>
 
             {/* Main Content Container */}
-            <div className="relative z-10 w-full min-h-dvh md:h-full max-w-[1440px] flex flex-col justify-center lg:pl-10 py-12 md:py-0">
+            <div className="relative z-10 w-full min-h-dvh lg:h-full max-w-[1440px] flex flex-col justify-center lg:pl-10 py-12 lg:py-0">
 
                 {/* Logos - Mobile View (Stacked) - Placed in document flow to prevent overlap */}
-                <div className="flex flex-col items-center gap-4 z-20 md:hidden w-full mb-8 pt-4 shrink-0">
+                <div className="flex flex-col items-center gap-4 z-20 lg:hidden w-full mb-8 pt-4 shrink-0">
                     <img
                         src={logo}
                         alt="Trese Chewy Cake Logo"
@@ -53,16 +53,16 @@ const LandingPage: React.FC = () => {
                 </div>
 
                 {/* Left Column: Typography & CTA */}
-                <div className="w-full md:w-[50%] flex flex-col items-center md:items-start z-20 md:pl-20 shrink-0">
+                <div className="w-full lg:w-[50%] flex flex-col items-center lg:items-start z-20 lg:pl-20 shrink-0">
                     <h1
                         style={{ fontFamily: "Opun Mai Bold Italic" }}
-                        className="w-1000 text-center md:text-left text-5xl md:text-6xl lg:text-7xl font-bold text-[#CE828E] leading-[1.1] italic mb-8"
+                        className="w-full text-center lg:text-left text-5xl md:text-6xl lg:text-7xl font-bold text-[#CE828E] leading-[1.1] italic mb-8"
                     >
                         Chewy with a <br />
                         Tropical Soul.
                     </h1>
 
-                    <div className="flex w-full justify-center md:justify-start mt-5">
+                    <div className="flex w-full justify-center lg:justify-start mt-5">
                         <button
                             onClick={() => navigate('/order')}
                             style={{ fontFamily: "'Patrick Hand', cursive" }}
@@ -74,8 +74,17 @@ const LandingPage: React.FC = () => {
                 </div>
             </div>
 
+            {/* Mobile/Tablet Image */}
+            <div className="lg:hidden w-full flex justify-center mt-12 z-10 pointer-events-none px-4">
+                <img
+                    src={food_images}
+                    alt="Assortment of chewy cakes"
+                    className="w-full max-w-[600px] object-contain drop-shadow-2xl"
+                />
+            </div>
+
             {/* Right Column: Floating Food Images — behind text */}
-            <div className="hidden md:flex absolute top-0 right-0 w-[65%] md:w-[72%] h-full items-center justify-end pointer-events-none z-0 md:pt-25">
+            <div className="hidden lg:flex absolute top-0 right-0 lg:w-[50%] xl:w-[65%] 2xl:w-[72%] h-full items-center justify-end pointer-events-none z-0 lg:pt-25">
                 <img
                     src={food_images}
                     alt="Assortment of chewy cakes"
