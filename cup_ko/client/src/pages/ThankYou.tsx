@@ -89,11 +89,12 @@ const ThankYouPage: React.FC = () => {
             </div>
 
             {/* Mobile/Tablet Image */}
-            <div className="lg:hidden w-full flex justify-center mt-12 z-10 pointer-events-none px-4">
+            <div className="lg:hidden absolute inset-0 z-5 flex justify-center items-center pointer-events-none opacity-25 px-4 overflow-hidden">
                 <img
                     src={food_images}
                     alt="Assortment of chewy cakes"
-                    className="w-full max-w-[600px] object-contain drop-shadow-2xl"
+                    className="w-full max-w-[600px] md:max-w-[800px] object-contain drop-shadow-2xl
+                    mask-[linear-gradient(to_bottom,transparent,black_20%,black_80%,transparent),linear-gradient(to_right,transparent,black_20%,black_80%,transparent)] mask-intersect"
                 />
             </div>
 
