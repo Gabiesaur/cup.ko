@@ -38,9 +38,7 @@ const SalesTrackerPage: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
-    () => sessionStorage.getItem("salesTrackerAuth") === "true"
-  );
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [passwordInput, setPasswordInput] = useState("");
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const [authError, setAuthError] = useState<string | null>(null);
@@ -64,10 +62,15 @@ const SalesTrackerPage: React.FC = () => {
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: "include",
           body: JSON.stringify({ status: nextStatus }),
         },
       );
 
+      if (response.status === 401) {
+        setIsAuthenticated(false);
+        throw new Error("Session expired. Please log in again.");
+      }
       if (!response.ok) {
         throw new Error(`Failed to update status (${response.status})`);
       }
@@ -101,9 +104,14 @@ const SalesTrackerPage: React.FC = () => {
         `${API_URL}/deleteOrder/${orderId}`,
         {
           method: "DELETE",
+          credentials: "include",
         },
       );
 
+      if (response.status === 401) {
+        setIsAuthenticated(false);
+        throw new Error("Session expired. Please log in again.");
+      }
       if (!response.ok) {
         throw new Error(`Failed to delete order (${response.status})`);
       }
@@ -123,8 +131,14 @@ const SalesTrackerPage: React.FC = () => {
     try {
       setIsLoading(true);
       setErrorMessage(null);
-      const response = await fetch(`${API_URL}/getOrders`);
+      const response = await fetch(`${API_URL}/getOrders`, {
+        credentials: "include",
+      });
 
+      if (response.status === 401) {
+        setIsAuthenticated(false);
+        throw new Error("Session expired. Please log in again.");
+      }
       if (!response.ok) {
         throw new Error(`Failed to fetch orders (${response.status})`);
       }
@@ -141,17 +155,48 @@ const SalesTrackerPage: React.FC = () => {
   };
 
   useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await fetch(`${API_URL}/checkAuth`, {
+          credentials: "include",
+        });
+        if (response.ok) {
+          const data = await response.json();
+          if (data.isAuthenticated) {
+            setIsAuthenticated(true);
+          }
+        }
+      } catch (err) {
+        console.error("Auth check failed:", err);
+      }
+    };
+    void checkAuth();
+  }, []);
+
+  useEffect(() => {
     if (isAuthenticated) {
       void fetchOrders();
     }
   }, [isAuthenticated]);
+
+  const handleLogout = async () => {
+    try {
+      await fetch(`${API_URL}/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
+      setIsAuthenticated(false);
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
+  };
 
   const handleLogin = async () => {
     if (!passwordInput) {
       setAuthError("Please enter a password");
       return;
     }
-    
+
     try {
       setIsAuthenticating(true);
       setAuthError(null);
@@ -160,12 +205,12 @@ const SalesTrackerPage: React.FC = () => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({ password: passwordInput }),
       });
-      
+
       const data = await response.json();
       if (response.ok && data.success) {
-        sessionStorage.setItem("salesTrackerAuth", "true");
         setIsAuthenticated(true);
       } else {
         setAuthError(data.error || "Invalid password");
@@ -260,7 +305,7 @@ const SalesTrackerPage: React.FC = () => {
               className="mt-6 bg-white/30 hover:bg-white/50 text-white rounded-full px-8 py-2 font-bold transition-colors"
               style={{ fontFamily: "'Patrick Hand', cursive" }}
             >
-               Cancel & Go Back
+              Cancel & Go Back
             </button>
           </div>
         </div>
@@ -478,18 +523,18 @@ const SalesTrackerPage: React.FC = () => {
 
           <div className="flex flex-col sm:flex-row gap-4 mt-2">
             <button
-              onClick={() => navigate("/")}
-              className="bg-[#fce18d] text-[#e1a0aa] text-2xl md:text-3xl hover:bg-[#e08a1d] transition-colors rounded-[30px] px-10 py-3 shadow-md font-bold"
-              style={{ fontFamily: "Opun Mai Bold Italic" }}
-            >
-              Back to Home
-            </button>
-            <button
               onClick={fetchOrders}
               className="bg-[#e1a0aa] text-white text-2xl md:text-3xl hover:bg-[#c98e97] transition-colors rounded-[30px] px-10 py-3 shadow-md font-bold"
               style={{ fontFamily: "Opun Mai Bold Italic" }}
             >
               Reload Data
+            </button>
+            <button
+              onClick={handleLogout}
+              className="bg-white/80 text-[#873641] text-2xl md:text-3xl hover:bg-white transition-colors rounded-[30px] px-10 py-3 shadow-md font-bold"
+              style={{ fontFamily: "Opun Mai Bold Italic" }}
+            >
+              Logout
             </button>
           </div>
         </div>

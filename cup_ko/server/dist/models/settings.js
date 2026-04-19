@@ -35,7 +35,7 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
 const SettingsSchema = new mongoose_1.Schema({
-    adminPasswordHashes: { type: [String], default: [] },
+    adminPasswordHash: { type: String, required: true },
 });
 exports.default = mongoose_1.default.model("Settings", SettingsSchema);
 //# sourceMappingURL=settings.js.map

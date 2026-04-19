@@ -5,6 +5,14 @@ import dotenv from "dotenv";
 import Order from "./models/order";
 import Settings from "./models/settings";
 import bcrypt from "bcrypt";
+import session from "express-session";
+import MongoStore from "connect-mongo";
+
+declare module 'express-session' {
+  interface SessionData {
+    isAuthenticated: boolean;
+  }
+}
 
 dotenv.config();
 
@@ -20,6 +28,34 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Trust proxy if we are behind a reverse proxy like Render
+app.set("trust proxy", 1);
+
+// Session Configuration
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'fallback-secret-key-change-in-prod',
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: MONGO_URI,
+    collectionName: 'sessions'
+  }),
+  cookie: {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
+  }
+}));
+
+// Auth Middleware
+const requireAuth = (req: Request, res: Response, next: express.NextFunction) => {
+  if (req.session && req.session.isAuthenticated) {
+    next();
+  } else {
+    res.status(401).json({ error: "Unauthorized access" });
+  }
+};
 
 // Health check route
 app.get("/api/health", (req: Request, res: Response) => {
@@ -80,7 +116,43 @@ app.post("/saveOrder", async (req: Request, res: Response) => {
   }
 });
 
-app.patch("/updateOrder/:id", async (req: Request, res: Response) => {
+app.patch("/updateOrder/:id", requireAuth, async (req: Request, res: Response) => {
+  try {
+    const { status } = req.body;
+    const updatePayload: { status?: string } = {};
+
+    if (typeof status === "string") {
+      if (status !== "pending" && status !== "paid" && status !== "completed") {
+        res.status(400).json({ error: "Invalid status" });
+        return;
+      }
+
+      updatePayload.status = status;
+    }
+
+    if (Object.keys(updatePayload).length === 0) {
+      res.status(400).json({ error: "No valid fields to update" });
+      return;
+    }
+
+    const updated = await Order.findByIdAndUpdate(
+      req.params.id,
+      updatePayload,
+      { new: true },
+    );
+    if (!updated) {
+      res.status(404).json({ error: "Order not found" });
+      return;
+    }
+    res.status(200).json({ message: "Order updated", order: updated });
+  } catch (err: unknown) {
+    console.error("Update order error:", err);
+    const errorMessage = err instanceof Error ? err.message : "Unknown error";
+    res.status(400).json({ error: "update fail", details: errorMessage });
+  }
+});
+
+app.patch("/addRefNo/:id", async (req: Request, res: Response) => {
   try {
     const { gcashRefNo, status } = req.body;
     const updatePayload: { gcashRefNo?: string; status?: string } = {};
@@ -120,7 +192,7 @@ app.patch("/updateOrder/:id", async (req: Request, res: Response) => {
   }
 });
 
-app.delete("/deleteOrder/:id", async (req: Request, res: Response) => {
+app.delete("/deleteOrder/:id", requireAuth, async (req: Request, res: Response) => {
   try {
     const deletedOrder = await Order.findByIdAndDelete(req.params.id);
 
@@ -152,7 +224,7 @@ app.get("/getOrder/:id", async (req: Request, res: Response) => {
   }
 });
 
-app.get("/getOrders", async (_req: Request, res: Response) => {
+app.get("/getOrders", requireAuth, async (_req: Request, res: Response) => {
   try {
     const orders = await Order.find().sort({ date: -1 });
     res.status(200).json(orders);
@@ -166,14 +238,14 @@ app.get("/getOrders", async (_req: Request, res: Response) => {
 app.post("/verifyPassword", async (req: Request, res: Response) => {
   try {
     const { password } = req.body;
-    
+
     if (!password) {
       res.status(400).json({ error: "Password is required" });
       return;
     }
 
     const allSettings = await Settings.find();
-    
+
     // First time setup
     if (allSettings.length === 0) {
       const salt = await bcrypt.genSalt(10);
@@ -194,6 +266,7 @@ app.post("/verifyPassword", async (req: Request, res: Response) => {
     }
 
     if (isMatch) {
+      req.session.isAuthenticated = true;
       res.status(200).json({ success: true });
     } else {
       res.status(401).json({ error: "Invalid password" });
@@ -202,6 +275,26 @@ app.post("/verifyPassword", async (req: Request, res: Response) => {
     console.error("Password verification error:", err);
     res.status(500).json({ error: "Server error" });
   }
+});
+
+app.get("/checkAuth", (req: Request, res: Response) => {
+  if (req.session && req.session.isAuthenticated) {
+    res.status(200).json({ isAuthenticated: true });
+  } else {
+    res.status(401).json({ isAuthenticated: false });
+  }
+});
+
+app.post("/logout", (req: Request, res: Response) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Logout error:", err);
+      res.status(500).json({ error: "Failed to logout" });
+    } else {
+      res.clearCookie('connect.sid');
+      res.status(200).json({ message: "Logged out successfully" });
+    }
+  });
 });
 
 // Start Server

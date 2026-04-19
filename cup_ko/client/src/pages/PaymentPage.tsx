@@ -50,7 +50,7 @@ const PaymentPage: React.FC = () => {
         setIsLoading(true);
 
         try {
-            const response = await fetch(`${API_URL}/updateOrder/${orderId}`, {
+            const response = await fetch(`${API_URL}/addRefNo/${orderId}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ gcashRefNo: referenceNumber.trim(), status: "paid" }),

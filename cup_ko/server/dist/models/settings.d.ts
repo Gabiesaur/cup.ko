@@ -1,6 +1,6 @@
 import mongoose, { Document } from "mongoose";
 export interface ISettings extends Document {
-    adminPasswordHashes: string[];
+    adminPasswordHash: string;
 }
 declare const _default: mongoose.Model<ISettings, {}, {}, {}, mongoose.Document<unknown, {}, ISettings, {}, mongoose.DefaultSchemaOptions> & ISettings & Required<{
     _id: mongoose.Types.ObjectId;
