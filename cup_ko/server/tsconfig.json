@@ -22,7 +22,7 @@
     // Recommended Options
     "strict": true,
     "esModuleInterop": true,
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "isolatedModules": true,
     "skipLibCheck": true
   },
