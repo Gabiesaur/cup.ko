@@ -2,8 +2,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PageLayout from "../components/PageLayout";
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-
 type OrderItem = {
   name: string;
   quantity: number;
@@ -56,7 +54,7 @@ const SalesTrackerPage: React.FC = () => {
       setErrorMessage(null);
 
       const response = await fetch(
-        `${API_URL}/updateOrder/${order._id}`,
+        `/api/updateOrder/${order._id}`,
         {
           method: "PATCH",
           headers: {
@@ -101,7 +99,7 @@ const SalesTrackerPage: React.FC = () => {
       setErrorMessage(null);
 
       const response = await fetch(
-        `${API_URL}/deleteOrder/${orderId}`,
+        `/api/deleteOrder/${orderId}`,
         {
           method: "DELETE",
           credentials: "include",
@@ -131,7 +129,7 @@ const SalesTrackerPage: React.FC = () => {
     try {
       setIsLoading(true);
       setErrorMessage(null);
-      const response = await fetch(`${API_URL}/getOrders`, {
+      const response = await fetch(`/api/getOrders`, {
         credentials: "include",
       });
 
@@ -157,7 +155,7 @@ const SalesTrackerPage: React.FC = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await fetch(`${API_URL}/checkAuth`, {
+        const response = await fetch(`/api/checkAuth`, {
           credentials: "include",
         });
         if (response.ok) {
@@ -181,7 +179,7 @@ const SalesTrackerPage: React.FC = () => {
 
   const handleLogout = async () => {
     try {
-      await fetch(`${API_URL}/logout`, {
+      await fetch(`/api/logout`, {
         method: "POST",
         credentials: "include",
       });
@@ -200,7 +198,7 @@ const SalesTrackerPage: React.FC = () => {
     try {
       setIsAuthenticating(true);
       setAuthError(null);
-      const response = await fetch(`${API_URL}/verifyPassword`, {
+      const response = await fetch(`/api/verifyPassword`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

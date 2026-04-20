@@ -3,8 +3,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import cart from "../assets/cart.png";
 import PageLayout from "../components/PageLayout";
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-
 type BuyingMode = "physical" | "delivery" | "reservation";
 
 const PurchaseFormPage: React.FC = () => {
@@ -66,7 +64,7 @@ const PurchaseFormPage: React.FC = () => {
         setIsLoading(true);
 
         try {
-            const response = await fetch(`${API_URL}/saveOrder`, {
+            const response = await fetch(`/api/saveOrder`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

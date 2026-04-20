@@ -58,7 +58,7 @@ const requireAuth = (req: Request, res: Response, next: express.NextFunction) =>
 };
 
 // Health check route
-app.get("/api/health", (req: Request, res: Response) => {
+app.get("/health", (req: Request, res: Response) => {
   res.json({ message: "Server is running" });
 });
 
